@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 16:37:17 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/06 18:44:40 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/06 18:11:22 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/06 18:42:51 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-size_t ft_strlen(const char *s);
-
-int main(void)
+size_t	ft_strlen(const char *s)
 {
-	printf("%ld", ft_strlen("sdfg31izushjdf08ahn0n8qu3yj0ucahs9vg8uh01uhfc08aush0iajhfd0iuashf0n8qufh0i1uch30fh018fuh1038ufh0aisuhfda09uhsvuyr0817hfoufh08vuvhf08173h4081cuv1hfa807shf08qh08327h0*@)*&#$Y#*&@)hf08uz"));
+	unsigned int	counter;
+	const char	*refer;
+
+	refer = s;
+	counter = 0;
+	while(*refer)
+	{
+		counter++;
+		refer++;	
+	}
+	return (counter);
 }
