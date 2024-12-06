@@ -6,7 +6,7 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:11:22 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/06 18:42:51 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:16:24 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 size_t	ft_strlen(const char *s)
 {
 	unsigned int	counter;
-	const char	*refer;
+	const char		*refer;
 
 	refer = s;
 	counter = 0;
-	while(*refer)
+	while (*refer)
 	{
 		counter++;
-		refer++;	
+		refer++;
 	}
 	return (counter);
 }

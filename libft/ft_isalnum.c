@@ -6,7 +6,7 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 16:47:21 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/06 16:51:16 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:15:41 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_isalnum(int c)
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	else if (c >= '0' && c <= '9')
-	   return (1);
-	else 
-		return (0);	
+		return (1);
+	else
+		return (0);
 }
