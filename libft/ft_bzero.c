@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 19:24:19 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/07 18:03:30 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/06 19:41:10 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/07 18:05:13 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-void	*ft_memset(void *buffer, int c, size_t n)
+void	ft_bzero(void *buffer, size_t n)
 {
 	unsigned char	*refer;
-	unsigned char	i;
 
 	refer = (unsigned char *)buffer;
-	i = (unsigned char)c;
 	while (n > 0)
 	{
-		*refer = i;
+		*refer = 0;
 		refer++;
 		n--;
 	}
-	return (buffer);
 }
