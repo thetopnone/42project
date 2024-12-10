@@ -6,7 +6,7 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:57:31 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/10 18:11:13 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:48:30 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strchr(const char *s, int c)
 			return (strrf);
 		strrf++;
 	}
-	if ( c == '\0')
+	if (c == '\0')
 		return (strrf);
 	else
 		return (NULL);
