@@ -6,7 +6,7 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:31:41 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/12 22:44:04 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:50:04 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 	s1rf = (char *)s1;
 	s2rf = (char *)s2;
 	checker = 0;
-	if (*s2rf == '\0')
+	if (*s2rf == '\0' && n != 0)
 		return (s1rf);
 	while (*s1rf && checker < n)
 	{
