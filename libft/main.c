@@ -6,15 +6,17 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 16:37:17 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/06 18:44:40 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:38:08 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-
-size_t ft_strlen(const char *s);
+#include "libft.h"
 
 int main(void)
 {
-	printf("%ld", ft_strlen("sdfg31izushjdf08ahn0n8qu3yj0ucahs9vg8uh01uhfc08aush0iajhfd0iuashf0n8qufh0i1uch30fh018fuh1038ufh0aisuhfda09uhsvuyr0817hfoufh08vuvhf08173h4081cuv1hfa807shf08qh08327h0*@)*&#$Y#*&@)hf08uz"));
+	char s1[] = "hello";
+	char s2[] = "h";
+
+	printf("%s", ft_strnstr(s1,s2,0));
 }
