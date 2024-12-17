@@ -6,7 +6,7 @@
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:06:27 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/17 01:00:04 by akonstan         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:02:23 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,6 @@ static unsigned int	ft_char_amount(int n)
 	return (char_amount);
 }
 
-static unsigned int	ft_pow(int n, unsigned int power)
-{
-	unsigned int	result;
-
-	result = 1;
-	if (power > 0)
-	{
-		result *= n;
-		ft_pow(n, power - 1);
-	}
-	return (result);
-}
-
 static unsigned int	ft_abs(int n)
 {
 	unsigned int	value;
@@ -63,7 +50,7 @@ char	*ft_itoa(int n)
 {
 	char			*result;
 	unsigned int	abs_n;
-	unsigned int	index;
+	int				index;
 	unsigned int	char_amount;
 
 	char_amount = ft_char_amount(n);
@@ -77,7 +64,7 @@ char	*ft_itoa(int n)
 	while (index >= 0)
 	{
 		result[index] = (abs_n % 10) + '0';
-		abs_n / 10;
+		abs_n = abs_n / 10;
 		index--;
 	}
 	result[char_amount] = '\0';
