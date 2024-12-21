@@ -1,47 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   test9-10.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 17:27:58 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/19 19:07:17 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/19 19:33:57 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/19 19:45:13 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "libft.h"
 
-static int	ft_isspace(int c)
+int	main(void)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (0);
-	return (1);
-}
+	char	*dest;
+	char	*src = "This is the original";
 
-int	ft_atoi(const char *nptr)
-{
-	char			*ref;
-	unsigned int	value;
-	int				sign;
+	printf("%li size of source\n", ft_strlen(src));
+	printf("%s\n", src);
+	dest = malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (!dest)
+		return (1);
+	ft_memcpy(dest, src, ft_strlen(src));
 
-	ref = (char *)nptr;
-	value = 0;
-	sign = 1;
-	while (ft_isspace((int)*ref) == 0)
-		ref++;
-	if (*ref == '-')
-	{
-		sign *= -1;
-		ref++;
-	}
-	if (*ref == '+')
-		ref++;
-	while (ft_isdigit(*ref) == 1)
-	{
-		value = value * 10 + (*ref - '0');
-		ref++;
-	}
-	return (sign * value);
 }
