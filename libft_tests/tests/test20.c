@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   test20.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 17:30:39 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/23 17:30:40 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:08:06 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/23 17:19:33 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
+#include <stdlib.h>
+#include <string.h>
 
-void	ft_putnbr_fd(int n, int fd)
+int	main(void)
 {
-	char			numchar;
-	unsigned int	abs_n;
+	char	str1[] = "suqowhtqpodkjlkqieruqoi";
+	char	str2[] = "s";
 
-	numchar = 0;
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		abs_n = -n;
-	}
-	else
-		abs_n = n;
-	if (abs_n > 9)
-		ft_putnbr_fd((abs_n / 10), fd);
-	numchar = abs_n % 10 + '0';
-	write(fd, &numchar, 1);
+	//printf("Testing strnstr\n\n str1 && str2\n\nBase : %s\n", strnstr(str1, str2, 0));
+	printf("Replica : %s\n", ft_strnstr(str1, str2, ft_strlen(str1)));
+	return (0);
 }

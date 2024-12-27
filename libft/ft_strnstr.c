@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 19:31:41 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/12 22:50:04 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:20:24 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/25 16:17:27 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 	s1rf = (char *)s1;
 	s2rf = (char *)s2;
 	checker = 0;
-	if (*s2rf == '\0' && n != 0)
+	if (*s2rf == '\0')
 		return (s1rf);
 	while (*s1rf && checker < n)
 	{
@@ -32,7 +32,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 			counter++;
 			if (*(s2rf + counter) == '\0')
 				return (s1rf);
-			if (counter == n + 1 - checker || *(s1rf + counter) == '\0')
+			if (counter == n - checker || *(s1rf + counter) == '\0')
 				return (NULL);
 		}
 		checker++;

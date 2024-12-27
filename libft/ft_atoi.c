@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 17:27:58 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/19 19:07:17 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:20:57 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/25 16:26:41 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ int	ft_atoi(const char *nptr)
 	sign = 1;
 	while (ft_isspace((int)*ref) == 0)
 		ref++;
-	if (*ref == '-')
+	if (*ref == '-' || *ref == '+')
 	{
-		sign *= -1;
+		if (*ref == '-')
+			sign *= -1;
 		ref++;
 	}
-	if (*ref == '+')
-		ref++;
 	while (ft_isdigit(*ref) == 1)
 	{
 		value = value * 10 + (*ref - '0');

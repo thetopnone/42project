@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 19:06:17 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/14 19:46:57 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:21:27 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/26 13:46:49 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*dummy_ptr;
 	void	*buffer;
 	size_t	size_max;
 
 	size_max = (size_t)-1;
-	dummy_ptr = malloc(1);
 	buffer = NULL;
 	if (nmemb == 0 || size == 0)
-		return (dummy_ptr);
+		return (malloc(1));
 	if (size > size_max / nmemb)
 		return (NULL);
 	buffer = malloc(nmemb * size);

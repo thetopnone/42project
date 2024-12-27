@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 18:19:56 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/10 18:48:49 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:26:49 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/25 15:56:53 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strrchr(const char *s, int c)
 	last_occ = NULL;
 	while (*cur_char)
 	{
-		if (c == (unsigned char)*cur_char)
+		if (c % 256 == (unsigned char)*cur_char)
 			last_occ = cur_char;
 		cur_char++;
 	}

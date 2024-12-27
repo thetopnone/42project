@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 17:57:31 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/10 18:48:30 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 16:44:27 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/25 15:55:28 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strchr(const char *s, int c)
 	strrf = (char *)s;
 	while (*strrf)
 	{
-		if (c == (unsigned char)*strrf)
+		if (c % 256 == (unsigned char)*strrf)
 			return (strrf);
 		strrf++;
 	}

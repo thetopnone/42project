@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 20:31:22 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/16 23:29:23 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/23 17:31:19 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/26 15:14:05 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ char	**ft_split(char const *s, char c)
 	char		**str_arr;
 
 	if (!s || *s == '\0')
-		return (NULL);
+	{
+		str_arr = malloc(1 * sizeof(char *));
+		str_arr[0] = NULL;
+		return (str_arr);
+	}
 	str_arr = malloc((ft_word_amount(s, c) + 1) * sizeof(char *));
 	if (!str_arr)
 		return (NULL);

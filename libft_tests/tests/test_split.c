@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   test_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 17:30:39 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/23 17:30:40 by akonstan         ###   ########.fr       */
+/*   Created: 2024/12/26 14:50:12 by akonstan          #+#    #+#             */
+/*   Updated: 2024/12/26 15:07:58 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
-void	ft_putnbr_fd(int n, int fd)
+int	main(void)
 {
-	char			numchar;
-	unsigned int	abs_n;
-
-	numchar = 0;
-	if (n < 0)
+	char	str[] = " ";
+	char	delim = 'z';
+	char	**result;
+	
+	result = ft_split(str, delim);
+	if (!result[0])
 	{
-		write(fd, "-", 1);
-		abs_n = -n;
+		printf("(null)");
+		return (0);
 	}
-	else
-		abs_n = n;
-	if (abs_n > 9)
-		ft_putnbr_fd((abs_n / 10), fd);
-	numchar = abs_n % 10 + '0';
-	write(fd, &numchar, 1);
+	while (*result)
+	{
+		printf("%s\n", *result);
+		result++;
+	}
+	//free(result);
+	return (0);
 }
