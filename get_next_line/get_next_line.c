@@ -6,15 +6,11 @@
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:11:38 by akonstan          #+#    #+#             */
-/*   Updated: 2025/02/19 11:49:38 by akonstan         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:05:41 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -40,8 +36,6 @@ char	*ft_read_file(int fd, char *book)
 	char	*temp;
 	ssize_t	bytes_read;
 
-	if (!book)
-		book = ft_calloc(1, 1);
 	note = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	bytes_read = 1;
 	while (bytes_read > 0)
@@ -49,6 +43,7 @@ char	*ft_read_file(int fd, char *book)
 		bytes_read = read(fd, note, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
+			free(book);
 			free(note);
 			return (NULL);
 		}
@@ -115,6 +110,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (!buffer)
+		buffer = ft_calloc(1, 1);
 	buffer = ft_read_file(fd, buffer);
 	if (!buffer || *buffer == '\0')
 	{
