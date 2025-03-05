@@ -12,12 +12,28 @@
 
 #include "so_long.h"
 
-int	ft_check_walls(char **map)
+int	ft_check_walls(char **map_copy, int	row_size, int row_amount )
 {
+	int	x;
+	int	y;
 
+	x = 0;
+	y = 0;
+	while (y < row_amount)
+	{
+		if (map_copy[y][0] != '1' || map_copy[y][row_size - 1] != '1')
+			return (1);
+		y++;
+	}
+	while (x < row_size)
+	{
+		if (map_copy[0][x] != '1' || map_copy[row_amount - 1][x] != '1')
+			return (1);
+		x++;
+	}
 }
 
-int	ft_check_minimum_size(char **map)
+int	ft_check_minimum_rows(char **map)
 {
 	char	*row;
 	int		counter;
