@@ -12,12 +12,6 @@
 
 #include "so_long.h"
 
-static void	ft_free_and_close(int fd, char *row)
-{
-	free(row);
-	close(fd);
-}
-
 int	ft_check_walls(char **map)
 {
 
@@ -44,30 +38,29 @@ int	ft_check_minimum_size(char **map)
 	return (0);
 }
 
-int	ft_check_shape(char *mapfile)
+int	ft_check_shape(char **map)
 {
 	int		fd;
 	char	*row;
 	int		len;
+	int		counter;
 
-	fd = open(mapfile, O_RDONLY);
-	row = get_next_line(fd);
+	row = *map;
 	if (row != NULL)
-		len = ft_strlen(row);
-	free(row);
+		return (1);
+	len = ft_strlen(row);
+	counter = 1;
 	while (1)
 	{
-		row = get_next_line(fd);
+		row = *(map + counter);
 		if (row != NULL && (ft_strlen(row) != len))
 		{
-			ft_free_and_close(fd, row);
+			free(row);
 			return (1);
 		}
 		if (row == NULL)
-		{
-			close(fd);
 			break ;
-		}
+		counter++;
 		free(row);
 	}
 	return (0);
