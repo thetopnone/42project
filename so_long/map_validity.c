@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include <fcntl.h>
-#include <stdlib.h>
+#include "so_long.h"
 
 static void	ft_free_and_close(int fd, char *row)
 {
@@ -20,33 +18,29 @@ static void	ft_free_and_close(int fd, char *row)
 	close(fd);
 }
 
-int	ft_check_walls(char *mapfile)
+int	ft_check_walls(char **map)
 {
+
 }
 
-int	ft_check_minimum_size(char *mapfile)
+int	ft_check_minimum_size(char **map)
 {
-	int		fd;
 	char	*row;
 	int		counter;
 
-	fd = open(mapfile, O_RDONLY);
-	row = get_next_line(fd);
+	row = *map;
 	if (row == NULL)
 		return (1);
-	free(row);
 	counter = 1;
 	while (1)
 	{
-		row = get_next_line(fd);
+		row = *(map + counter);
 		if (row == NULL)
 			break ;
 		counter++;
-		free(row);
 	}
-	close(fd);
 	if (counter < 3)
-		return 1;
+		return (1);
 	return (0);
 }
 

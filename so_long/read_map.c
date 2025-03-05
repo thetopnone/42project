@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <fcntl.h>
+#include "so_long.h"
 
 int	*ft_map_size(char *mapfile)
 {
