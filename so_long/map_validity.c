@@ -6,83 +6,66 @@
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:16:39 by akonstan          #+#    #+#             */
-/*   Updated: 2025/03/05 12:24:59 by akonstan         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:14:11 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_check_walls(char **map_copy, int	row_size, int row_amount )
+int	ft_check_walls(t_data *data)
 {
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	while (y < row_amount)
+	while (y < data->map->columns)
 	{
-		if (map_copy[y][0] != '1' || map_copy[y][row_size - 1] != '1')
-			return (1);
+		if (data->map->map_arr[y][0] != '1' ||
+		data->map->map_arr[y][data->map->rows - 1] != '1')
+			return (data->error->walls_error = 1);
 		y++;
 	}
-	while (x < row_size)
+	while (x < data->map->rows)
 	{
-		if (map_copy[0][x] != '1' || map_copy[row_amount - 1][x] != '1')
-			return (1);
+		if (data->map->map_arr[0][x] != '1' ||
+		data->map->map_arr[data->map->columns - 1][x] != '1')
+			return (data->error->walls_error = 1);
 		x++;
 	}
+	return (data->error->walls_error = 0);
 }
 
-int	ft_check_minimum_rows(char **map)
+int	ft_check_minimum_rows(t_data *data)
 {
-	char	*row;
-	int		counter;
-
-	row = *map;
-	if (row == NULL)
-		return (1);
-	counter = 1;
-	while (1)
-	{
-		row = *(map + counter);
-		if (row == NULL)
-			break ;
-		counter++;
-	}
-	if (counter < 3)
-		return (1);
-	return (0);
+	if (data->map->rows < 3)
+		return (data->error->rows_error = 1);
+	return (data->error->rows_error = 0);
 }
 
-int	ft_check_shape(char **map)
+void	ft_map_objects(t_data *data)
 {
-	int		fd;
-	char	*row;
-	int		len;
-	int		counter;
+	int x;
+	int	y;
 
-	row = *map;
-	if (row != NULL)
-		return (1);
-	len = ft_strlen(row);
-	counter = 1;
-	while (1)
+	x = 0;
+	while (data->map->map_arr[x] != NULL)
 	{
-		row = *(map + counter);
-		if (row != NULL && (ft_strlen(row) != len))
+		y = 0;
+		while (data->map->map_arr[y][x] != '\0')
 		{
-			free(row);
-			return (1);
+			if (data->map->map_arr[y][x] == 'P')
+				data->map->starts += 1;
+			if (data->map->map_arr[y][x] == 'E')
+				data->map->exits += 1;
+			if (data->map->map_arr[y][x] == 'C')
+				data->map->collectibles += 1;
+			y++;
 		}
-		if (row == NULL)
-			break ;
-		counter++;
-		free(row);
+		x++;
 	}
-	return (0);
-}
-
-int	ft_map_validity(char *mapfile)
-{
-
+	if (data->map->starts != 1 || data->map->exits != 1 ||
+	data->map->collectibles < 1)
+		return (data->error->objects_error = 1);
+	return (data->error->objects_error = 0);
 }

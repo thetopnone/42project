@@ -6,66 +6,90 @@
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:55:12 by akonstan          #+#    #+#             */
-/*   Updated: 2025/02/26 16:12:06 by akonstan         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:28:21 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	*ft_map_size(char *mapfile)
+static void	ft_free_and_close(char *mem, int fd)
+{
+	free(mem);
+	close(fd);
+}
+
+int	ft_map_size(t_data *data)
 {
 	char	*line;
-	int		rows;
-	int		*size;
 	int		fd;
 
-	fd = open(mapfile, O_RDONLY);
-	size = ft_calloc(2, sizeof(int));
+	fd = open(data->map->mapfile, O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		return (NULL);
-	size[1] = ft_strlen(line);
-	rows = 1;
+		return (data->error->rows_error = 1);
+	data->map->columns = ft_strlen(line);
+	data->map->rows = 1;
 	free(line);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		rows++;
+		if (ft_strlen(line) != data->map->columns)
+		{
+			ft_free_and_close(line, fd);
+			return (data->error->columns_error = 1);
+		}
+		data->map->rows += 1;
 		free(line);
 	}
-	size[0] = rows;
 	close(fd);
-	return (size);
+	return (data->error->columns_error = 0);
 }
 
-char	**ft_read_map(char *mapfile)
+int	ft_read_map(t_data *data)
 {
-	char	**map;
 	char	*line;
-	int		*size;
-	int		cur_row;
 	int		fd;
 
-	cur_row = 0;
-	size = ft_map_size(mapfile);
-	map = ft_calloc((size[0] + 1), sizeof(char *));
-	fd = open(mapfile, O_RDONLY);
+	data->map->x = 0;
+	data->map->map_arr = ft_calloc((data->map->rows) + 1, sizeof(char *));
+	fd = open(data->map->mapfile, O_RDONLY);
+	if (fd < 0 || data->map->map_arr == NULL)
+	{
+		ft_free_and_close(data->map->map_arr, fd);
+		return (data->error->map_read_error = 1);
+	}
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		if (line[size[1] - 1] == '\n')
-			line[size[1] - 1] = '\0';
-		map[cur_row] = line;
-		cur_row++;
+		if (line[(data->map->columns) - 1] == '\n')
+			line[(data->map->columns) - 1] = '\0';
+		data->map->map_arr[data->map->x] = line;
+		data->map->x += 1;
 	}
-	map[cur_row] = NULL;
+	data->map->map_arr[data->map->x] = NULL;
 	close(fd);
-	free (size);
-	return (map);
+	return (data->error->map_read_error = 0);
+}
+
+int	ft_duplicate_map(t_data *data)
+{
+	int	x;
+
+	data->map->map_copy = ft_calloc(data->map->rows + 1, sizeof(char *));
+	if (data->map->map_copy == NULL)
+		return (data->error->map_copy_error = 1);
+	x = 0;
+	while (data->map->map_arr[x] != NULL)
+	{
+		data->map->map_copy[x] = ft_strdup(data->map->map_arr[x]);
+		x++;
+	}
+	data->map->map_copy[x] = NULL;
+	return (data->error->map_copy_error = 0);
 }
 
 /*int	main(void)
