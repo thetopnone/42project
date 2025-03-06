@@ -6,7 +6,7 @@
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:16:39 by akonstan          #+#    #+#             */
-/*   Updated: 2025/03/06 14:14:11 by akonstan         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:55:41 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_check_minimum_rows(t_data *data)
 	return (data->error->rows_error = 0);
 }
 
-void	ft_map_objects(t_data *data)
+int	ft_map_objects(t_data *data)
 {
 	int x;
 	int	y;
@@ -68,4 +68,19 @@ void	ft_map_objects(t_data *data)
 	data->map->collectibles < 1)
 		return (data->error->objects_error = 1);
 	return (data->error->objects_error = 0);
+}
+
+int	ft_check_valid_path(t_data *data)
+{
+	int	start;
+	int	end;
+	int	*visited;
+
+	visited = ft_calloc(data->map->rows, sizeof(int *));
+	start = 0;
+	end = 0;
+	data->map->queue = ft_calloc(data->map->rows * data->map->columns, 
+	sizeof(t_point));
+	data->map->queue[0] = data->
+
 }

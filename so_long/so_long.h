@@ -23,14 +23,19 @@
 # define IMG_WIDTH 32
 # define IMG_HEIGHT 32
 
+//----------Vector-Data-Struct---------//
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
 
 //----------Map-Data-Struct-------------//
-
 typedef struct s_map
 {
 	char	*mapfile;
 	char	**map_arr;
-	char	*queue;
+	t_point		*queue;
 	int		x;//cur_row
 	int		y;//cur_col
 	int		rows;
@@ -38,15 +43,12 @@ typedef struct s_map
 	int		collectibles;
 	int		exits;
 	int		starts;
-	int		exit_pos_x;
-	int		exit_pos_y;
-	int		start_pos_x;
-	int		start_pos_y;
+	t_point		exit_pos;
+	t_point		start_pos;
 	char	**map_copy;
 }	t_map;
 
 //----------Player-Data-Struct---------//
-
 typedef struct s_player
 {
 	int	pos_x;
@@ -64,8 +66,8 @@ typedef struct s_error
 	int	map_read_error;
 	int	map_copy_error;
 }	t_error;
-//---------Main-Data-Struct---------//
 
+//---------Main-Data-Struct---------//
 typedef struct s_data
 {
 	int		move_count;
