@@ -22,6 +22,10 @@
 
 # define IMG_WIDTH 32
 # define IMG_HEIGHT 32
+# define UP 1
+# define DOWN -1
+# define LEFT -1
+# define RIGHT 1
 
 //----------Vector-Data-Struct---------//
 typedef struct s_point
@@ -40,7 +44,8 @@ typedef struct s_map
 	int		y;//cur_col
 	int		rows;
 	int		columns;
-	int		collectibles;
+	int		clcts;
+	int		clctd;
 	int		exits;
 	int		starts;
 	t_point		exit_pos;
@@ -64,12 +69,14 @@ typedef struct s_error
 	int	path_error;
 	int	objects_error;
 	int	map_read_error;
+	int	map_input_error;
 	int	map_copy_error;
 }	t_error;
 
 //---------Main-Data-Struct---------//
 typedef struct s_data
 {
+	int		**visited;
 	int		move_count;
 	int		collected_items;
 	int		win_size_x;

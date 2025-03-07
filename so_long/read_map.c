@@ -47,6 +47,13 @@ int	ft_map_size(t_data *data)
 	return (data->error->columns_error = 0);
 }
 
+int	ft_check_minimum_rows(t_data *data)
+{
+	if (data->map->rows < 3)
+		return (data->error->rows_error = 1);
+	return (data->error->rows_error = 0);
+}
+
 int	ft_read_map(t_data *data)
 {
 	char	*line;
