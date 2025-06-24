@@ -6,7 +6,7 @@
 #    By: akonstan <akonstan@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 18:55:58 by akonstan          #+#    #+#              #
-#    Updated: 2024/12/05 20:33:28 by akonstan         ###   ########.fr        #
+#    Updated: 2025/06/24 19:38:50 by akonstan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ all: $(NAME)
 # Creates the final file
 
 $(NAME): $(OBJS)
-	ar rcs $@ $(OBJS)
+	ar -rcs $@ $(OBJS)
 
 clean:
 	rm -f $(OBJS)
