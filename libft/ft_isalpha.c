@@ -6,7 +6,7 @@
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:21:57 by akonstan          #+#    #+#             */
-/*   Updated: 2024/12/23 17:22:00 by akonstan         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:25:01 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,5 @@
 
 int	ft_isalpha(int c)
 {
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	else if (c >= 'A' && c <= 'Z')
-		return (1);
-	else
-		return (0);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
