@@ -98,6 +98,7 @@ static void	ft_update_queue(t_data *data, t_vector old_pos, int *back)
 			data->queue[(*back)++] = next_pos;
 			data->visited[next_pos.x][next_pos.y] = 1;
 		}
+		j++;
 	}
 }
 
