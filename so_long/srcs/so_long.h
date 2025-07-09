@@ -1,0 +1,140 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 18:04:21 by akonstan          #+#    #+#             */
+/*   Updated: 2025/06/30 18:04:25 by akonstan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# include "../libft/libft.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include <unistd.h>
+# include <math.h>
+# include <X11/keysym.h>
+# include "mlx.h"
+
+//MACROS
+# define MAX_WIN_WIDTH 1920
+# define MAX_WIN_HEIGHT 1024
+# define UP 1
+# define DOWN -1
+# define RIGHT 2
+# define LEFT -2
+
+//VECTOR STRUCTURE
+typedef struct s_vector
+{
+	int	x;
+	int	y;
+}	t_vector;
+
+//PLAYER DATA STRUCTURE
+typedef struct s_player
+{
+	t_vector	old_pos;
+	t_vector	new_pos;
+	int			moves;
+	int			pocket;
+}	t_player;
+
+//IMAGE DATA STRUCTURE
+typedef struct s_image
+{
+	void	*idle1;
+	void	*wall;
+	void	*floor;
+	void	*c_exit;
+	void	*exit;
+	void	*coll;
+	void	*ce_idle1;
+	int		w;
+	int		h;
+}	t_image;
+
+//MLX STRUCTURE
+typedef struct s_mlx
+{
+	void	*mlx;
+	t_image	img;
+	void	*window;
+}	t_mlx;
+
+//MAP DATA STRUCTURE
+typedef struct s_map
+{
+	char		*mapfile;
+	char		**map_arr;
+	int			rows;
+	int			columns;
+	int			spawn_am;
+	int			exit_am;
+	t_vector	spawn;
+	t_vector	exit;
+	int			collectibles;
+	int			collected;
+}	t_map;
+
+//ERROR DATA STRUCTURE
+typedef struct s_error
+{
+	int	map_read_error;
+	int	map_size_error;
+	int	map_struct_error;
+	int	invalid_map;
+	int	queue_alloc_error;
+	int	visited_alloc_error;
+	int	image_get_error;
+}	t_error;
+
+//BASE DATA STRUCTURE
+typedef struct s_data
+{
+	t_player	*player;//Needs Initialization
+	t_mlx		*mlx;//Needs initialization
+	t_vector	*queue;//Needs initialization with rows*cols
+	int			**visited;//Needs initialization with rows*cols
+	t_map		*map;//Needs allocation
+	t_error		*error;//Needs allocation
+	char		**map_dup;
+}	t_data;
+
+//ERROR HANDLER FUNCTIONS
+size_t	ft_error_check(t_data *data);
+size_t	ft_final_error_check(t_data *data);
+void	ft_free_and_close(void *memory, int fd);
+//INITIALIZER FUNCTIONS
+void	ft_initialize_data(t_data *data, char *argv);
+//READ MAP FUNCTIONS
+int		ft_read_mapfile(t_data *data, int index);
+int		ft_get_map_size(t_data *data);
+int		ft_check_window_size(t_data *data);
+//KEY HANDLER FUNCTIONS
+int		ft_key_handler(int keycode, t_data *data);
+//CLEANUP MLX FUNCTIONS
+void	ft_free_queue_and_visited(t_data *data);
+int		ft_clear(t_data *data);
+void	ft_kill_images(t_mlx *mlx);
+int		ft_close_program(t_data *data);
+void	ft_free_data(t_data *data);
+//RENDERER FUNCTIONS
+int		ft_get_images(t_mlx *mlx, t_data *data);
+void	ft_put_map_to_win(t_mlx *mlx, t_data *data, int i, int j);
+void	ft_update_map(t_mlx *mlx, t_data *data, t_player *player);
+//MAP VALIDITY FUNCTIONS
+int		ft_valid_char(t_data *data, t_map *map);
+int		ft_valid_border(t_data *data);
+int		ft_check_valid_path(t_data *data, int front, int back);
+void	ft_get_spawn_and_exit(t_map *map);
+//MAIN FUNCTIONS
+void	ft_map_dup(t_data *data);
+#endif
+//NEED A FUNCTION TO CHEKC FULL MAP VALIDITY
