@@ -28,15 +28,9 @@ void	ft_mini_sort(t_node **a)
 		ft_update_middle(a);
 		biggest = ft_get_biggest(a);
 		if (biggest->cur_pos != 2)
-		{
 			ra(a);
-			continue ;
-		}
 		else if ((*a)->value > (*a)->next->value)
-		{
 			sa(a);
-			continue ;
-		}
 	}
 }
 
