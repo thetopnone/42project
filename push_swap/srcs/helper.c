@@ -19,6 +19,20 @@ static int	ft_isspace(int c)
 	return (1);
 }
 
+static int	ft_set_sign(char **ref)
+{
+	int	sign;
+
+	sign = 1;
+	if (**ref == '-' || **ref == '+')
+	{
+		if (**ref == '-')
+			sign *= -1;
+		(*ref)++;
+	}
+	return (sign);
+}
+
 //Converts a char to long and sets error if its is of undesired type
 long	ft_atol(const char *nptr, t_error *error)
 {
@@ -28,32 +42,37 @@ long	ft_atol(const char *nptr, t_error *error)
 
 	ref = (char *)nptr;
 	value = 0;
-	sign = 1;
 	while (ft_isspace((int)*ref) == 0)
 		ref++;
-	if (*ref == '-' || *ref == '+')
+	sign = ft_set_sign(&ref);
+	if (!*ref)
+		return (error->not_numbers = 1);
+	while (*ref)
 	{
-		if (*ref == '-')
-			sign *= -1;
-		ref++;
-	}
-	while (ft_isdigit(*ref) == 1)
-	{
-		value = value * 10 + (*ref - '0');
-		ref++;
+		if (ft_isdigit(*ref) == 1)
+			value = value * 10 + (*ref - '0');
 		if (*ref && ft_isdigit(*ref) == 0)
-			return (error->invalid_input = 1);
+			return (error->not_numbers = 1);
+		ref++;
 	}
 	return (sign * value);
 }
 
-//Calculates the numerical distance between 2 numbers
-long long	ft_abs_dist(long value1, long value2)
+//Calculates the signed numerical distance between 2 numbers
+long long	ft_dist(long value1, long value2)
 {
-	long long	result;
+	return (value1 - value2);
+}
 
-	result = value1 - value2;
-	if (result < 0)
-		return (result *= -1);
-	return (result);
+//Free the arguments char**
+void	ft_free_args(char **arguments)
+{
+	int	counter;
+
+	counter = ft_get_arg_count(arguments);
+	while (counter > 0)
+	{
+		free(arguments[--counter]);
+	}
+	free (arguments);
 }

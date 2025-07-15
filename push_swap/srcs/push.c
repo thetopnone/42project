@@ -16,7 +16,7 @@ void	ft_push(t_node **origin, t_node **target)
 {
 	t_node	*origin_head;
 
-	if (!origin || !target || !*origin)
+	if (!origin || !*origin)
 		return ;
 	origin_head = (*origin)->next;
 	if ((*origin)->next)
@@ -40,7 +40,7 @@ void	pa(t_node **b, t_node **a)
 
 void	pb(t_node **a, t_node **b)
 {
-	if (!*b)
+	if (!*a)
 		return ;
 	ft_push(a, b);
 	ft_update_cur_pos(a);

@@ -12,6 +12,18 @@
 
 #include "push_swap.h"
 
+//Updates the data in both stacks
+void	ft_update_stacks(t_node **a, t_node **b)
+{
+	ft_update_cur_pos(a);
+	ft_update_cur_pos(b);
+	ft_update_middle(a);
+	ft_update_middle(b);
+	ft_set_target_node(b, a);
+	ft_update_cost(a, b);
+	ft_set_cheapest(b);
+}
+
 //Updates the cur_poses on the stack after every operation
 void	ft_update_cur_pos(t_node **stack)
 {
@@ -41,11 +53,13 @@ void	ft_update_middle(t_node **stack)
 	if (!stack || !*stack)
 		return ;
 	ref = *stack;
-	median = (ft_nodelast(stack)->cur_pos) / 2;
+	median = ((ft_nodelast(stack)->cur_pos) / 2) + 1;
 	while (ref)
 	{
 		if (ref->cur_pos < median)
 			ref->is_above_middle = 1;
+		else
+			ref->is_above_middle = 0;
 		ref = ref->next;
 	}
 }
@@ -70,36 +84,9 @@ void	ft_update_cost(t_node **a, t_node **b)
 	while (b_ref)
 	{
 		if (b_ref->is_above_middle)
-			b_ref->cost = b_ref->cur_pos + b_ref->target->cur_pos + 1;
+			ft_set_cost_above(b_ref, a_len);
 		else
-			b_ref->cost = total - b_ref->cur_pos - b_ref->target->cur_pos + 1;
-		b_ref = b_ref->next;
-	}
-}
-
-//Sets the desired node in which we want to place the b node above it
-void	ft_set_target_node(t_node **b, t_node **a)
-{
-	t_node		*b_ref;
-	t_node		*a_ref;
-	long long	dist;
-
-	if (!b || !*b || !a || !*a)
-		return ;
-	b_ref = *b;
-	dist = 0;
-	while (b_ref)
-	{
-		a_ref = *a;
-		while (a_ref)
-		{
-			if (ft_abs_dist(a_ref->value, b_ref->value) < dist || dist == 0)
-			{
-				b_ref->target = a_ref;
-				dist = ft_abs_dist(a_ref->value, b_ref->value);
-			}
-			a_ref = a_ref->next;
-		}
+			ft_set_cost_below(b_ref, a_len, b_len);
 		b_ref = b_ref->next;
 	}
 }
@@ -110,13 +97,19 @@ int	ft_is_sorted(t_node **stack)
 	t_node	*previous_node;
 	t_node	*current_node;
 
+	if (!stack || !*stack)
+		return (1);
 	current_node = *stack;
 	current_node = current_node->next;
 	while (current_node)
 	{
 		previous_node = current_node->prev;
+		if (!previous_node)
+			break ;
 		if (current_node->value < previous_node->value)
+		{
 			return (0);
+		}
 		current_node = current_node->next;
 	}
 	return (1);

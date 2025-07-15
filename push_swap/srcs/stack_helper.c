@@ -53,6 +53,7 @@ t_node	*ft_nodenew(long value, int index)
 		return (NULL);
 	new_node->value = value;
 	new_node->cur_pos = index;
+	new_node->target = NULL;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
@@ -63,11 +64,19 @@ void	ft_nodeadd_back(t_node **stack, t_node *node)
 {
 	t_node	*last_node;
 
-	if (!stack || !*stack)
+	if (!stack)
 		return ;
-	last_node = ft_nodelast(stack);
-	last_node->next = node;
-	node->prev = last_node;
+	if (!*stack)
+	{
+		*stack = node;
+		node->prev = NULL;
+	}
+	else
+	{
+		last_node = ft_nodelast(stack);
+		last_node->next = node;
+		node->prev = last_node;
+	}
 }
 
 //Clears the stack

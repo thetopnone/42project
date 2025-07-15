@@ -20,11 +20,11 @@ void	ft_reverse_rotate(t_node **head)
 		return ;
 	tail = ft_nodelast(head);
 	(*head)->prev = tail;
-	(*head)->next->prev = NULL;
 	tail->next = (*head);
 	tail->prev->next = NULL;
 	tail->prev = NULL;
 	(*head) = tail;
+	ft_nodelast(head)->next = NULL;
 }
 
 void	rra(t_node **a)
@@ -49,8 +49,14 @@ void	rrr(t_node **a, t_node **b)
 {
 	if (ft_stack_len(a) <= 1 || ft_stack_len(b) <= 1)
 		return ;
-	ft_reverse_rotate(a);
-	ft_reverse_rotate(b);
+	if (ft_stack_len(a) == 2)
+		ft_swap(a);
+	else
+		ft_reverse_rotate(a);
+	if (ft_stack_len(b) == 2)
+		ft_swap(b);
+	else
+		ft_reverse_rotate(b);
 	ft_update_cur_pos(a);
 	ft_update_cur_pos(b);
 	write(1, "rrr\n", 4);

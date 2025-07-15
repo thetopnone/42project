@@ -15,32 +15,39 @@
 //Sorts a for 3 elements
 void	ft_mini_sort(t_node **a)
 {
-	t_node	*a_ref;
+	t_node	*biggest;
 
 	if (!a || !*a || ft_is_sorted(a))
 		return ;
+	ft_update_cur_pos(a);
+	ft_update_middle(a);
+	biggest = ft_get_smallest(a);
 	while (!ft_is_sorted(a))
 	{
-		if ((*a)->value == 2 && (*a)->next->value == 1)
-		{
-			sa(a);
-			continue ;
-		}
-		if ((*a)->value != 1)
+		ft_update_cur_pos(a);
+		ft_update_middle(a);
+		biggest = ft_get_biggest(a);
+		if (biggest->cur_pos != 2)
 		{
 			ra(a);
 			continue ;
 		}
-		else
-			rra(a);
+		else if ((*a)->value > (*a)->next->value)
+		{
+			sa(a);
+			continue ;
+		}
 	}
 }
 
-void	ft_push_swap(t_node **a, t_node **b)
+//Base sorting function
+void	ft_push_swap(t_node **a, t_node **b, int chunks)
 {
-	if (!a || !b || !*a || ft_is_sorted(a))
+	t_node	*smallest;
+
+	if (!a || ft_is_sorted(a))
 		return ;
-	ft_push_to_b(a, b);
+	ft_push_to_b(a, b, chunks);
 	ft_mini_sort(a);
 	while (*b)
 	{
@@ -48,7 +55,15 @@ void	ft_push_swap(t_node **a, t_node **b)
 		ft_move_nodes_to_top(a, b);
 		pa(b, a);
 	}
-	while (!ft_is_sorted(a))
-		ra(a);
+	ft_update_cur_pos(a);
+	ft_update_middle(a);
+	smallest = ft_get_smallest(a);
+	while (ft_is_sorted(a) != 1)
+	{
+		smallest = ft_get_smallest(a);
+		if (smallest->is_above_middle)
+			ra(a);
+		else
+			rra(a);
+	}
 }
-
