@@ -38,7 +38,7 @@ void	ft_animate_walk(t_mlx *mlx, t_data *data, t_player *player)
 		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img.walk[0],
 			player->old_pos.y * 32, player->old_pos.x * 32);
 	player->timer++;
-	if (player-> timer > 12000)
+	if (player-> timer > 3000)
 	{
 		player->moving = 0;
 		player->timer = 0;
@@ -49,7 +49,7 @@ void	ft_animate_idle(t_mlx *mlx, t_data *data, t_player *player)
 {
 	unsigned int	k;
 
-	k = data->frame / 32000;
+	k = data->frame / 8000;
 	if (data->map->map_arr[player->new_pos.x][player->new_pos.y] == 'E')
 		mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img.ce_idle[k % 2],
 			player->old_pos.y * 32, player->old_pos.x * 32);
