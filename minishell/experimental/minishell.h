@@ -15,8 +15,8 @@
 # include <stdlib.c>
 # include <unistd.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <read/read.h>
+# include <read/history.h>
 # include <fcntl.h>
 # include "libft_extended/libft.h"
 
@@ -46,34 +46,37 @@ typedef enum s_token_type
 //Token structure which the lexer will give as output
 typedef struct s_token
 {
-	is_single_quoted;
-	is_double_quoted;
+	char				*string;
+	enum t_token_type	type;
+	bool				is_single_quoted;
+	bool				is_double_quoted;
+	struct t_token		*next;
 } t_token;
 
 //Redirections structure, shows what kind of redirection we have and
 //where it should target
 typedef struct s_redirect
 {
-	direction;
-	target_file;
+	enum t_redirect_type	type;
+	char					*target_file;
 } t_redirect;
 
 //Command struct that holds the actuall command to execute and any 
 //redirections (if the exist)
 typedef struct s_cmd
 {
-	command_name;
-	flags;
-	t_redirect redirection;
+	char		**argv;
+	t_redirect	*redirection;
 } t_cmd;
-//Pipeline structure that holds the command on the current pipeline and
+
+//Pipe structure that holds the command on the current pipe and
 //a pointer pointing to the next pipe
-typedef struct s_pipeline
+typedef struct s_pipe
 {
-	t_cmd				command;
-	unsigned int		cmd_amount;
-	struct t_pipeline	*next;
-} t_pipeline;
+	t_cmd			*command;
+	unsigned int	cmd_amount;
+	struct t_pipe	*next;
+} t_pipe;
 
 //Parser functions
-t_pipeline		parser(t_token **tokens);
+t_pipe		**parser(t_token **tokens);

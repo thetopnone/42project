@@ -1,25 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akonstan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/26 18:49:54 by akonstan          #+#    #+#             */
-/*   Updated: 2025/09/26 18:49:55 by akonstan         ###   ########.fr       */
+/*   Created: 2025/09/28 15:51:30 by akonstan          #+#    #+#             */
+/*   Updated: 2025/09/28 15:51:36 by akonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//
 
-//Main parsing function
-t_pipe	**parser(t_token **token)
-{
-	while ((*token)->type != T_END)
-	{
-
-		(*token) = (*token)->next;
-	}
-}
