@@ -33,6 +33,7 @@ typedef enum s_redirect_type
 //Enum with all the token types. Quotes should not be their own tokens
 //We filter them in the lexer out and we set squotesd or dquoted flags
 //on the token
+//T_END will be signaling the end of a token chain
 typedef enum s_token_type
 {
 	T_WORD,
@@ -70,7 +71,7 @@ typedef struct s_redirect
 typedef struct s_cmd
 {
 	char		**argv;
-	t_token		**cmd_tokens;
+	t_token		**cmd_chain;
 	t_redirect	*redirection;
 } t_cmd;
 
@@ -89,3 +90,4 @@ t_pipe	*parser(t_token **chain);
 t_token	*ft_new_token(t_token_type type, char *str);
 t_token	*ft_get_last_token(t_token *chain);
 void	ft_add_token(t_token **chain, t_token *token);
+size_t	ft_chainlen(t_token *chain);

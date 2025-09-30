@@ -52,5 +52,21 @@ void	ft_add_token(t_token **chain, t_token *token)
 	if (!(*chain))
 		*chain = ft_new_token(type, token);
 	else
-		ft_get_last_token((*chain))->next = ft_new_token(type, str);
+		ft_get_last_token((*chain))->next = ft_new_token(token->type, token->str);
+}
+
+//This function will give you the length of the token chain
+size_t	ft_chainlen(t_token *chain)
+{
+	size_t	res;
+
+	if (!chain)
+		return (0);
+	res = 0;
+	while (chain->type != T_END)
+	{
+		res++;
+		chain = chain->next;
+	}
+	return (res);
 }

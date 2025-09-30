@@ -18,7 +18,7 @@
 //A functions that "feeds" the tokens to the pipe
 //Triple pointer so we pass the token array by value so we will already have
 //it moving while inserting (will not need to parse the whole array every time)
-void	ft_insert_token(t_token **dest, t_token ***src)
+void	ft_cmd_chain(t_token **dest, t_token ***src)
 {
 	if (!dest || !src)
 		return (NULL);
@@ -47,18 +47,29 @@ size_t	ft_count_pipe_len(t_token *chain)
 t_pipe	*ft_init_pipe(t_token **chain)
 {
 	t_pipe	*pipe;
+	t_token	*temp;
 
 	if (!chain)
 		return (NULL);
 	pipe = ft_calloc(1, sizeof(t_pipe));
+	temp = NULL;
 	if (!pipe)
 		return (NULL);
 	pipe->cmd_amount = ft_count_pipe_len(*chain);
-	pipe->command->cmd_token = ft_calloc(pipe->cmd_amount + 1,
-			sizeof (t_token));
-	if (!(pipe->command->token))
-		return (NULL);
-
+	pipe->command->(*cmd_chain) = (*chain);
+	while ((*chain)->type != T_END)
+	{
+		(*chain) = (*chain)->next;
+		if ((*chain)->type == T_PIPE_OP)
+		{
+			temp = (*chain)->next;
+			(*chain)->type = T_END;
+			(*chain)->next = NULL;
+			(*chain) = temp;
+			break ;
+		}
+	}
+	return (pipe);
 }
 
 //Main parsing function
