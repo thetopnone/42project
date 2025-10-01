@@ -12,4 +12,26 @@
 
 #include "../minishell.h"
 
+t_token	*ft_get_cmd_chain(t_token **chain)
+{
+	t_token	*temp;
+	t_token	*cmd_chain;
 
+	if (!chain)
+		return(NULL);
+	temp = NULL;
+	cmd_chain = *chain;
+	while ((*chain)->type != T_END)
+	{
+		*chain = (*chain)->next;
+		if ((*chain)->type == T_PIPE_OP)
+		{
+			temp = (*chain)->next;
+			(*chain)->type = T_END;
+			(*chain)->next = NULL;
+			*chain = temp;
+			break ;
+		}
+	}
+	return (cmd_chain);
+}

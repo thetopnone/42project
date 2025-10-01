@@ -71,7 +71,7 @@ typedef struct s_redirect
 typedef struct s_cmd
 {
 	char		**argv;
-	t_token		**cmd_chain;
+	t_token		*cmd_chain;
 	t_redirect	*redirection;
 } t_cmd;
 
@@ -86,6 +86,8 @@ typedef struct s_pipe
 
 //PARSER FUNCTIONS
 t_pipe	*parser(t_token **chain);
+//PARSER HELPER FUNCTIONS
+
 //TOKENS HELPER FUNCTIONS
 t_token	*ft_new_token(t_token_type type, char *str);
 t_token	*ft_get_last_token(t_token *chain);

@@ -28,7 +28,7 @@ void	ft_cmd_chain(t_token **dest, t_token ***src)
 }
 
 //A function that counts the amount of tokens a pipe has
-size_t	ft_count_pipe_len(t_token *chain)
+size_t	ft_pipelen(t_token *chain)
 {
 	size_t	token_amount;
 
@@ -44,7 +44,7 @@ size_t	ft_count_pipe_len(t_token *chain)
 }
 
 //A function that initializes a pipe
-t_pipe	*ft_init_pipe(t_token **chain)
+t_pipe	*ft_new_pipe(t_token **chain)
 {
 	t_pipe	*pipe;
 	t_token	*temp;
@@ -55,29 +55,16 @@ t_pipe	*ft_init_pipe(t_token **chain)
 	temp = NULL;
 	if (!pipe)
 		return (NULL);
-	pipe->cmd_amount = ft_count_pipe_len(*chain);
-	pipe->command->(*cmd_chain) = (*chain);
-	while ((*chain)->type != T_END)
-	{
-		(*chain) = (*chain)->next;
-		if ((*chain)->type == T_PIPE_OP)
-		{
-			temp = (*chain)->next;
-			(*chain)->type = T_END;
-			(*chain)->next = NULL;
-			(*chain) = temp;
-			break ;
-		}
-	}
+	pipe->command->cmd_chain = ft_get_cmd_chain(chain);
+	pipe->cmd_amount = ft_chainlen(pipe->command->cmd_chain);
 	return (pipe);
 }
 
 //Main parsing function
-t_pipe	*parser(t_token **token)
+t_pipe	*parser(t_token **chain)
 {
 	while ((*token)->type != T_END)
 	{
-
 		(*token) = (*token)->next;
 	}
 }

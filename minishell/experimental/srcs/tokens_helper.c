@@ -70,3 +70,4 @@ size_t	ft_chainlen(t_token *chain)
 	}
 	return (res);
 }
+
