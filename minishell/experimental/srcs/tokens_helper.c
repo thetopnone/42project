@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell"
+#include "../minishell.h"
 
 //This file will have tokens list handling functions
 //
@@ -50,9 +50,9 @@ void	ft_add_token(t_token **chain, t_token *token)
 	if (!chain)
 		return ;
 	if (!(*chain))
-		*chain = ft_new_token(type, token);
+		*chain = token;
 	else
-		ft_get_last_token((*chain))->next = ft_new_token(token->type, token->str);
+		ft_get_last_token((*chain))->next = token;
 }
 
 //This function will give you the length of the token chain
@@ -70,4 +70,3 @@ size_t	ft_chainlen(t_token *chain)
 	}
 	return (res);
 }
-

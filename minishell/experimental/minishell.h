@@ -22,13 +22,13 @@
 # include "libft_extended/libft.h"
 
 //Enum with all the redirection types
-typedef enum s_redirect_type
+typedef enum s_redir_type
 {
 	RE_IN,
 	RE_OUT,
 	RE_APPEND,
 	RE_HEREDOC
-} t_redirect_type;
+} t_redir_type;
 
 //Enum with all the token types. Quotes should not be their own tokens
 //We filter them in the lexer out and we set squotesd or dquoted flags
@@ -37,10 +37,7 @@ typedef enum s_redirect_type
 typedef enum s_token_type
 {
 	T_WORD,
-	T_RE_IN,
-	T_RE_OUT,
-	T_RE_APPEND,
-	T_RE_HEREDOC,
+	T_REDIR,
 	T_PIPE_OP,
 	T_END
 } t_token_type;
@@ -51,6 +48,7 @@ typedef struct s_token
 {
 	char			*string;
 	t_token_type	type;
+	bool			is_open_quote;
 	bool			is_single_quoted;
 	bool			is_double_quoted;
 	struct s_token	*next;
@@ -58,10 +56,14 @@ typedef struct s_token
 
 //Redirections structure, shows what kind of redirection we have and
 //where it should target
+//The two bools describe the filename
 typedef struct s_redirect
 {
-	t_redirect_type	type;
-	char			*target_file;
+	t_redirect_type		type;
+	char				*target;
+	bool				is_single_quoted;
+	bool				is_double_quoted;
+	struct s_redirect	*next;
 } t_redirect;
 
 //Command struct that holds the actuall command to execute and any 
@@ -72,7 +74,7 @@ typedef struct s_cmd
 {
 	char		**argv;
 	t_token		*cmd_chain;
-	t_redirect	*redirection;
+	t_redirect	*red_chain;
 } t_cmd;
 
 //Pipe structure that holds the command on the current pipe and
@@ -84,12 +86,38 @@ typedef struct s_pipe
 	struct s_pipe	*next;
 } t_pipe;
 
+//-----------------------------------------------------------------
 //PARSER FUNCTIONS
+//-----------------------------------------------------------------
 t_pipe	*parser(t_token **chain);
+//-----------------------------------------------------------------
 //PARSER HELPER FUNCTIONS
-
+//-----------------------------------------------------------------
+size_t	ft_pipelen(t_token *chain);
+t_token	*ft_get_cmd_chain(t_token **chain);
+t_pipe	*ft_get_last_pipe(t_pipe *pipeline);
+t_pipe	*ft_new_pipe(t_token **chain);
+void	ft_add_pipe(t_pipe **pipeline, t_token **chain);
+//-----------------------------------------------------------------
+//PARSER HELPER 2 FUNCTIONS
+//-----------------------------------------------------------------
+t_redirect	*ft_get_red_chain(t_token s*cmd_chain);
+void		ft_purify_cmd_chain(t_token *cmd_chain);
+//-----------------------------------------------------------------
+//REDIRECTION HELPER FUNCTIONS
+//-----------------------------------------------------------------
+t_redirect	*ft_new_redir(t_redirect_type type, char *target);
+t_redirect	*ft_get_last_redir(t_redirect *red_chain);
+void		ft_add_redir(t_redirect **red_chain, t_redirect *redirect);
+size_t		ft_redirlen(t_redirect *red_chain);
+//-----------------------------------------------------------------
 //TOKENS HELPER FUNCTIONS
+//-----------------------------------------------------------------
 t_token	*ft_new_token(t_token_type type, char *str);
 t_token	*ft_get_last_token(t_token *chain);
 void	ft_add_token(t_token **chain, t_token *token);
 size_t	ft_chainlen(t_token *chain);
+//-----------------------------------------------------------------
+//CLEANER FUNCTIONS
+//-----------------------------------------------------------------
+void	ft_clear_token(t_token **chain, t_token *token);
