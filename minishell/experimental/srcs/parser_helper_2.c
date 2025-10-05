@@ -26,10 +26,11 @@ static t_redir_type	ft_get_redir_type(char *string)
 }
 
 //A function that extracts the redirections from the cmd_chain
-t_redirect	*ft_get_red_chain(t_token s*cmd_chain)
+t_redirect	*ft_get_red_chain(t_token *cmd_chain)
 {
 	t_redirect		*red_chain;
 	t_redir_type	red_type;
+	t_quote_type	q_type;
 	char			*target;
 
 	if (!cmd_chain)
@@ -37,13 +38,15 @@ t_redirect	*ft_get_red_chain(t_token s*cmd_chain)
 	red_chain = NULL;
 	target = NULL;
 	red_type = 0;
+	q_type = 0;
 	while (cmd_chain->type != T_END)
 	{
 		if (cmd_chain->type == T_REDIR)
 		{
 			red_type = ft_get_redir_type(cmd_chain->string);
 			target = cmd_chain->next->string;
-			ft_add_redir(&red_chain, ft_new_redir(red_type, target));
+			q_type = cmd_chain->next->q_type;
+			ft_add_redir(&red_chain, ft_new_redir(red_type, target, q_type));
 			cmd_chain = cmd_chain->next;
 		}
 		cmd_chain = cmd_chain->next;
@@ -67,4 +70,29 @@ void	ft_purify_cmd_chain(t_token **cmd_chain)
 		}
 		target = ->next;
 	}
+}
+
+//Helper function to extract the command chain from the token chain
+t_token	*ft_get_cmd_chain(t_token **chain)
+{
+	t_token	*temp;
+	t_token	*cmd_chain;
+
+	if (!chain)
+		return (NULL);
+	temp = NULL;
+	cmd_chain = *chain;
+	while ((*chain)->type != T_END)
+	{
+		*chain = (*chain)->next;
+		if ((*chain)->type == T_PIPE_OP)
+		{
+			temp = (*chain)->next;
+			(*chain)->type = T_END;
+			(*chain)->next = NULL;
+			*chain = temp;
+			break ;
+		}
+	}
+	return (cmd_chain);
 }

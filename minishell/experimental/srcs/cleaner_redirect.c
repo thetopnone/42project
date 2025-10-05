@@ -12,14 +12,20 @@
 
 #include "../minishell.h"
 
-//Main parsing function
-t_pipe	*ft_parser(t_token **chain)
+//A function that clears the first redirection on the red_chain
+void	ft_clear_head_redir(t_token *red_chain)
 {
-	t_pipe	*pipeline;
-
-	if (!chain || !(*chain))
-		return (NULL);
-	while ((*chain)->type != T_END)
-		ft_add_pipe(&pipeline, chain);
-	return (pipeline);
+	t_redirect	*head
+	
+	if (!red_chain)
+		return ;
+	head = red_chain->next;
+	red_chain->next = NULL;
+	if (red_chain->target)
+	{
+		free(red_chain->target);
+		red_chain->target = NULL;
+	}
+	free(red_chain);
+	red_chain = head;
 }

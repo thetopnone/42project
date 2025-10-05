@@ -31,31 +31,6 @@ size_t	ft_pipelen(t_token *chain)
 	return (token_amount);
 }
 
-//Helper function to extract the command chain from the token chain
-t_token	*ft_get_cmd_chain(t_token **chain)
-{
-	t_token	*temp;
-	t_token	*cmd_chain;
-
-	if (!chain)
-		return (NULL);
-	temp = NULL;
-	cmd_chain = *chain;
-	while ((*chain)->type != T_END)
-	{
-		*chain = (*chain)->next;
-		if ((*chain)->type == T_PIPE_OP)
-		{
-			temp = (*chain)->next;
-			(*chain)->type = T_END;
-			(*chain)->next = NULL;
-			*chain = temp;
-			break ;
-		}
-	}
-	return (cmd_chain);
-}
-
 //A function that returns a pointer to the last pipe in the pipeline
 t_pipe	*ft_get_last_pipe(t_pipe *pipeline)
 {
@@ -78,6 +53,8 @@ t_pipe	*ft_new_pipe(t_token **chain)
 		return (NULL);
 	pipe->command->cmd_chain = ft_get_cmd_chain(chain);
 	pipe->cmd_amount = ft_chainlen(pipe->command->cmd_chain);
+	pipe->command->red_chain = ft_get_red_chain(pipe->command->cmd_chain);
+	ft_purify_cmd_chain(&(pipe->command->cmd_chain));
 	pipe->next = NULL;
 	return (pipe);
 }
@@ -85,7 +62,7 @@ t_pipe	*ft_new_pipe(t_token **chain)
 //A function that adds a new pipe to the pipeline
 void	ft_add_pipe(t_pipe **pipeline, t_token **chain)
 {
-	if (!pipeline)
+	if (!pipeline || !chain || !(*chain))
 		return ;
 	if (!(*pipeline))
 		*pipeline = ft_new_pipe(chain);

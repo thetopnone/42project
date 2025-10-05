@@ -12,14 +12,12 @@
 
 #include "../minishell.h"
 
-//Main parsing function
-t_pipe	*ft_parser(t_token **chain)
+//Function that clears an allocated string
+void	ft_clear_string(char **string)
 {
-	t_pipe	*pipeline;
-
-	if (!chain || !(*chain))
-		return (NULL);
-	while ((*chain)->type != T_END)
-		ft_add_pipe(&pipeline, chain);
-	return (pipeline);
+	if (string && *string)
+	{
+		free(*string);
+		*string = NULL;
+	}
 }

@@ -12,14 +12,34 @@
 
 #include "../minishell.h"
 
-//Main parsing function
-t_pipe	*ft_parser(t_token **chain)
+//A function that clears head token from the chain
+int	ft_clear_head_token(t_token **chain)
 {
-	t_pipe	*pipeline;
+	t_token	*head;
 
 	if (!chain || !(*chain))
-		return (NULL);
-	while ((*chain)->type != T_END)
-		ft_add_pipe(&pipeline, chain);
-	return (pipeline);
+		return (1);
+	head = (*chain)->next;
+	(*chain)->next = NULL;
+	ft_clean_string(&((*chain)->string));
+	free(*chain);
+	*chain = head;
+	return (0);
+}
+
+//A function that clears last token
+int	ft_clear_last_token(t_token  **chain)
+{
+	t_token	*cur;
+
+	if (!chain || !(*chain))
+		return (1);
+	cur = *chain;
+	if (cur->next == NULL || cur->type == T_END)
+	{
+		ft_clean_string(&(cur->string));
+		free(cur);
+		cur = NULL;
+		return (0);
+	}
 }

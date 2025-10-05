@@ -12,47 +12,53 @@
 
 #include "../minishell.h"
 
-//A function that clears head token from the chain
-static void	ft_clear_head_token(t_token **chain)
-{
-	t_token	*head;
-
-	if (!chain || !(*chain))
-		return ;
-	head = (*chain)->next;
-	(*chain)->next = NULL;
-	if ((*chain)->string)
-	{
-		free((*chain)->string);
-		(*chain)->string = NULL;
-	}
-	free(*chain);
-	(*chain) = head;
-}
-
 //A function that clears the specififed token from the chain
-void	ft_clear_token(t_token **chain, t_token *token)
+int	ft_remove_token(t_token **chain, t_token *token)
 {
+	t_token	*cur;
+	t_token	*prev;
 	t_token	*temp;
 
 	if (!chain || !(*chain) || !token)
+		return (1);
+	cur = (*chain);
+	prev = NULL;
+	while (cur && cur != token)
+	{
+		prev = cur;
+		cur = cur->next;
+	}
+	if (!cur)
+		return (1);
+	temp = cur->next;
+	ft_clear_string(&(cur->string));
+	free(cur);
+	if (!prev)
+		(*chain) = temp;
+	else
+		prev->next = temp;
+	return (0);
+}
+
+//A function that deletes the specified redirection from the red_chain
+void	ft_remove_redir(t_redirect **red_chain, t_redirect *redirection)
+{
+	t_redirect	*temp;
+	t_redirect	*cur;
+
+	if (red_chain || !redirection)
 		return ;
 	temp = NULL;
-	if (token == (*chain))
+	cur = *red_chain
+	if (t_redirect == cur)
 	{
-		ft_clear_head_token(chain);
+		ft_clear_head_redir(red_chain);
 		return ;
 	}
-	while ((*chain)->next != token && (*chain))
-		(*chain) = (*chain)->next;
-	if (*chain == NULL || (*chain)->type == T_END)
+	while (cur && cur->next != redirection)
+		*red_chain = (*red_chain)->next;
+	if (*red_chain == NULL)
 		return ;
-	temp = (*chain)->next->next;
-	if ((*chain)->next->string)
-	{
-		free((*chain)->next->string);
-		(*chain)->next->string = NULL;
-	}
-	free((*chain)->next);
-	(*chain)->next = temp;
+	temp = (*red_chain)->next->next;
+	if
 }

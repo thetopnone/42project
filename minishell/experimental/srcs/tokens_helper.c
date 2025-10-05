@@ -17,7 +17,7 @@
 //This function will create a token on the list of the specified type
 //And with the specified string text.
 //All content is set to null (twice for the next node pointer, just in case)
-t_token	*ft_new_token(t_token_type type, char *str)
+t_token	*ft_new_token(t_token_type type, char *str, t_quote_type q_type)
 {
 	t_token	*token;
 
@@ -29,6 +29,7 @@ t_token	*ft_new_token(t_token_type type, char *str)
 	ft_bzero(token);
 	token->type = type;
 	token->string = ft_strdup(str);
+	token->q_type = q_type;
 	token->next = NULL;
 	return (token);
 }
