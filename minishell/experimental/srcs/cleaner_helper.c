@@ -12,8 +12,8 @@
 
 #include "../minishell.h"
 
-//Function that clears an allocated string
-void	ft_clear_string(char **string)
+//Function that deletes an allocated string
+void	ft_del_string(char **string)
 {
 	if (string && *string)
 	{

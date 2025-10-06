@@ -100,47 +100,55 @@ typedef struct s_pipe
 //error type
 typedef struct s_error
 {
-	int	remove_token;
-	int	remove_dir;
+	int	del_token;
+	int	del_token_chain;
+	int	del_redir_chain;
+	int	del_cmd;
+	int	del_pipeline;
 	int	add_pipe;
 } t_error;
 
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //PARSER FUNCTIONS
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 t_pipe	*parser(t_token **chain);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //PARSER HELPER FUNCTIONS
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 size_t	ft_pipelen(t_token *chain);
 t_pipe	*ft_get_last_pipe(t_pipe *pipeline);
 t_pipe	*ft_new_pipe(t_token **chain);
 void	ft_add_pipe(t_pipe **pipeline, t_token **chain);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //PARSER HELPER 2 FUNCTIONS
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 t_redirect	*ft_get_red_chain(t_token s*cmd_chain);
 void		ft_purify_cmd_chain(t_token *cmd_chain);
 t_token		*ft_get_cmd_chain(t_token **chain);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //REDIRECTION HELPER FUNCTIONS
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 t_redirect	*ft_new_redir(t_redirect_type type, char *target);
 t_redirect	*ft_get_last_redir(t_redirect *red_chain);
 void		ft_add_redir(t_redirect **red_chain, t_redirect *redirect);
 size_t		ft_redirlen(t_redirect *red_chain);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //TOKENS HELPER FUNCTIONS
-//-----------------------------------------------------------------
-t_token	*ft_new_token(t_token_type type, char *str);
-t_token	*ft_get_last_token(t_token *chain);
-void	ft_add_token(t_token **chain, t_token *token);
-size_t	ft_chainlen(t_token *chain);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
+t_token		*ft_new_token(t_token_type type, char *str);
+t_token		*ft_get_last_token(t_token *chain);
+void		ft_add_token(t_token **chain, t_token *token);
+size_t		ft_chainlen(t_token *chain);
+//-----------------------------------------------------------------------------
 //CLEANER FUNCTIONS
-//-----------------------------------------------------------------
-void	ft_clear_token(t_token **chain, t_token *token);
-//-----------------------------------------------------------------
+//-----------------------------------------------------------------------------
+int			ft_del_token(t_token **chain, t_token *token, t_error *err);
+int			ft_del_token_chain(t_token **chain, t_error *err);
+int			ft_del_redir_chain(t_redirect **red_chain, t_redirect *redir,
+				t_error *err);
+int			ft_del_cmd(t_cmd **command, t_error *err);
+int			ft_del_pipeline(t_pipe **pipeline, t_error *err);
+//-----------------------------------------------------------------------------
 //CLEANER HELPER FUNCTIONS
-//-----------------------------------------------------------------
-void	ft_clear_head_token(t_token **chain);
+//-----------------------------------------------------------------------------
+void		ft_del_string(char **string);
