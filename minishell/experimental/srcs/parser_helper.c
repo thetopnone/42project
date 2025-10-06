@@ -32,10 +32,13 @@ size_t	ft_pipelen(t_token *chain)
 }
 
 //A function that returns a pointer to the last pipe in the pipeline
-t_pipe	*ft_get_last_pipe(t_pipe *pipeline)
+t_pipe	*ft_get_last_pipe(t_pipe *pipeline, t_error *err)
 {
 	if (!pipeline)
+	{
+		err->get_last_pipe = 1;
 		return (NULL);
+	}
 	while (pipeline->next != NULL)
 		pipeline = pipeline->next;
 	return (pipeline);
@@ -47,11 +50,17 @@ t_pipe	*ft_new_pipe(t_token **chain, t_error *err)
 	t_pipe	*pipe;
 
 	if (!chain)
+	{
+		err->new_pipe = 1;
 		return (NULL);
+	}
 	pipe = ft_calloc(1, sizeof(t_pipe));
 	if (!pipe)
+	{
+		err->new_pipe = 1;
 		return (NULL);
-	pipe->command->cmd_chain = ft_get_cmd_chain(chain);
+	}
+	pipe->command->cmd_chain = ft_get_cmd_chain(chain, err);
 	pipe->cmd_amount = ft_chainlen(pipe->command->cmd_chain);
 	pipe->command->red_chain = ft_get_red_chain(pipe->command->cmd_chain);
 	ft_purify_cmd_chain(&(pipe->command->cmd_chain));
@@ -65,8 +74,11 @@ int	ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err)
 	if (!pipeline || !chain || !(*chain))
 		return (err->add_pipe = 1);
 	if (!(*pipeline))
-		*pipeline = ft_new_pipe(chain);
+		*pipeline = ft_new_pipe(chain, err);
 	else
-		(ft_get_last_pipe(*pipeline))->next = ft_new_pipe(chain);
+		(ft_get_last_pipe(*pipeline, err))->next = ft_new_pipe(chain, err);
 	return (err->add_pipe = 0);
 }
+
+//A function that checks if the pipe is valid
+

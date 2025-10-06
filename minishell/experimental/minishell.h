@@ -105,7 +105,11 @@ typedef struct s_error
 	int	del_redir_chain;
 	int	del_cmd;
 	int	del_pipeline;
+	int get_last_pipe;
+	int	new_pipe;
 	int	add_pipe;
+	int	purify_cmd_chain;
+	int	get_cmd_chain;
 } t_error;
 
 //-----------------------------------------------------------------------------
@@ -115,20 +119,20 @@ t_pipe	*parser(t_token **chain);
 //-----------------------------------------------------------------------------
 //PARSER HELPER FUNCTIONS
 //-----------------------------------------------------------------------------
-size_t	ft_pipelen(t_token *chain);
-t_pipe	*ft_get_last_pipe(t_pipe *pipeline);
-t_pipe	*ft_new_pipe(t_token **chain);
-void	ft_add_pipe(t_pipe **pipeline, t_token **chain);
+size_t		ft_pipelen(t_token *chain);
+t_pipe		*ft_get_last_pipe(t_pipe *pipeline, t_error *err);
+t_pipe		*ft_new_pipe(t_token **chain, t_error *err);
+int			ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err);
 //-----------------------------------------------------------------------------
 //PARSER HELPER 2 FUNCTIONS
 //-----------------------------------------------------------------------------
-t_redirect	*ft_get_red_chain(t_token s*cmd_chain);
-void		ft_purify_cmd_chain(t_token *cmd_chain);
-t_token		*ft_get_cmd_chain(t_token **chain);
+t_redirect	*ft_get_red_chain(t_token *cmd_chain);
+int			ft_purify_cmd_chain(t_token *cmd_chain, t_error *err);
+t_token		*ft_get_cmd_chain(t_token **chain, t_error *err);
 //-----------------------------------------------------------------------------
 //REDIRECTION HELPER FUNCTIONS
 //-----------------------------------------------------------------------------
-t_redirect	*ft_new_redir(t_redirect_type type, char *target);
+t_redirect	*ft_new_redir(t_redir_type type, char *target);
 t_redirect	*ft_get_last_redir(t_redirect *red_chain);
 void		ft_add_redir(t_redirect **red_chain, t_redirect *redirect);
 size_t		ft_redirlen(t_redirect *red_chain);

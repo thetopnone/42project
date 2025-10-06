@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 //Main parsing function
-t_pipe	*ft_parser(t_token **chain)
+t_pipe	*ft_parser(t_token **chain, t_error *err)
 {
 	t_pipe	*pipeline;
 

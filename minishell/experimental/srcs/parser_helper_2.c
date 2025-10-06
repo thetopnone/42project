@@ -23,6 +23,7 @@ static t_redir_type	ft_get_redir_type(char *string)
 		return (RE_APPEND);
 	if (ft_strncmp(string, "<<", 3))
 		return (RE_HEREDOC);
+	return (RE_NONE);
 }
 
 //A function that extracts the redirections from the cmd_chain
@@ -54,32 +55,40 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain)
 }
 
 //I need a function to purify the cmd_chain from redirections and the filenames
-void	ft_purify_cmd_chain(t_token **cmd_chain)
+int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 {
-	t_token	*target;
+	t_token	**target;
 
-	if (!cmd_chain || !(*cmd_chain))
-		return ;
-	target = *cmd_chain;
-	while (target->type != T_END)
+	if (!cmd_chain)
+		return (err->purify_cmd_chain = 1);
+	if (!(*cmd_chain))
+	target = cmd_chain;
+	while ((*target)->type != T_END)
 	{
-		if (target->type == T_REDIR)
+		if ((*target)->type == T_REDIR)
 		{
-			ft_clear_token(cmd_chain, target->next);
-			ft_clear_token(cmd_chain, target);
+			if (!(*target)->next)
+				return (err->purify_cmd_chain = 1);
+			temp = (*target)->next->next;
+			ft_del_token(cmd_chain, (*target)->next);
+			ft_del_token(cmd_chain, *target);
 		}
-		target = ->next;
+		*target = temp;
 	}
+	return (err->purify_cmd_chain = 0);
 }
 
 //Helper function to extract the command chain from the token chain
-t_token	*ft_get_cmd_chain(t_token **chain)
+t_token	*ft_get_cmd_chain(t_token **chain, t_error *err)
 {
 	t_token	*temp;
 	t_token	*cmd_chain;
 
 	if (!chain)
+	{
+		err->get_cmd_chain = 1;
 		return (NULL);
+	}
 	temp = NULL;
 	cmd_chain = *chain;
 	while ((*chain)->type != T_END)
@@ -94,5 +103,6 @@ t_token	*ft_get_cmd_chain(t_token **chain)
 			break ;
 		}
 	}
+	err->get_cmd_chain = 0;
 	return (cmd_chain);
 }
