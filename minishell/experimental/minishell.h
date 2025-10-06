@@ -95,6 +95,16 @@ typedef struct s_pipe
 	struct s_pipe	*next;
 } t_pipe;
 
+//This is an error holding struct. We will pass t_error variables as
+//arguments so that functions will assign the value to the specific 
+//error type
+typedef struct s_error
+{
+	int	remove_token;
+	int	remove_dir;
+	int	add_pipe;
+} t_error;
+
 //-----------------------------------------------------------------
 //PARSER FUNCTIONS
 //-----------------------------------------------------------------

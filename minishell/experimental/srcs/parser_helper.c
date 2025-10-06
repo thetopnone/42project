@@ -42,7 +42,7 @@ t_pipe	*ft_get_last_pipe(t_pipe *pipeline)
 }
 
 //A function that initializes a pipe
-t_pipe	*ft_new_pipe(t_token **chain)
+t_pipe	*ft_new_pipe(t_token **chain, t_error *err)
 {
 	t_pipe	*pipe;
 
@@ -60,12 +60,13 @@ t_pipe	*ft_new_pipe(t_token **chain)
 }
 
 //A function that adds a new pipe to the pipeline
-void	ft_add_pipe(t_pipe **pipeline, t_token **chain)
+int	ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err)
 {
 	if (!pipeline || !chain || !(*chain))
-		return ;
+		return (err->add_pipe = 1);
 	if (!(*pipeline))
 		*pipeline = ft_new_pipe(chain);
 	else
 		(ft_get_last_pipe(*pipeline))->next = ft_new_pipe(chain);
+	return (err->add_pipe = 0);
 }
