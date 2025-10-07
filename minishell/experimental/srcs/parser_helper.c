@@ -71,8 +71,10 @@ t_pipe	*ft_new_pipe(t_token **chain, t_error *err)
 //A function that adds a new pipe to the pipeline
 int	ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err)
 {
-	if (!pipeline || !chain || !(*chain))
+	if (!pipeline || !chain)
 		return (err->add_pipe = 1);
+	if (!(*chain))
+		return (err->add_pipe = 0);
 	if (!(*pipeline))
 		*pipeline = ft_new_pipe(chain, err);
 	else

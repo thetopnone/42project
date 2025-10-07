@@ -15,12 +15,10 @@
 //This file has redirection chain manipulation functions
 //
 //Creates a new redirection of type and target
-t_redirect	*ft_new_redir(t_redir_type type, char *targe, t_quote_type q_type)
+t_redirect	*ft_new_redir(t_redir_type type, char *target, t_quote_type q_type)
 {
 	t_redirect	*red_chain;
 
-	if (!target)
-		return (NULL);
 	red_chain = ft_calloc(1, sizeof(t_redirect));
 	red_chain->type = type;
 	red_chain->target = ft_strdup(target);

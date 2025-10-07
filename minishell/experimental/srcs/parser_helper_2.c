@@ -27,31 +27,32 @@ static t_redir_type	ft_get_redir_type(char *string)
 }
 
 //A function that extracts the redirections from the cmd_chain
-t_redirect	*ft_get_red_chain(t_token *cmd_chain)
+t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 {
 	t_redirect		*red_chain;
-	t_redir_type	red_type;
-	t_quote_type	q_type;
-	char			*target;
+	t_token			*cur;
+	t_redir_type	r_type;
 
 	if (!cmd_chain)
 		return (NULL);
-	red_chain = NULL;
-	target = NULL;
-	red_type = 0;
-	q_type = 0;
-	while (cmd_chain->type != T_END)
+	cur = cmd_chain;
+	while (cur->type != T_END)
 	{
-		if (cmd_chain->type == T_REDIR)
+		if (cur->type == T_REDIR)
 		{
-			red_type = ft_get_redir_type(cmd_chain->string);
-			target = cmd_chain->next->string;
-			q_type = cmd_chain->next->q_type;
-			ft_add_redir(&red_chain, ft_new_redir(red_type, target, q_type));
-			cmd_chain = cmd_chain->next;
+			if (cur->next->type != T_WORD)
+			{
+				err->get_red_chain = 1;
+				return (NULL);
+			}
+			r_type = ft_get_redir_type(cur->string);
+			ft_add_redir(&red_chain, ft_new_redir(red_type, cur->next->string,
+							cur->next->q_type));
+			cur = cur->next;
 		}
-		cmd_chain = cmd_chain->next;
+		cur = cur->next;
 	}
+	return (red_chain);
 }
 
 //I need a function to purify the cmd_chain from redirections and the filenames
@@ -91,9 +92,8 @@ t_token	*ft_get_cmd_chain(t_token **chain, t_error *err)
 	}
 	temp = NULL;
 	cmd_chain = *chain;
-	while ((*chain)->type != T_END)
+	while ((*chain))
 	{
-		*chain = (*chain)->next;
 		if ((*chain)->type == T_PIPE_OP)
 		{
 			temp = (*chain)->next;
@@ -102,7 +102,35 @@ t_token	*ft_get_cmd_chain(t_token **chain, t_error *err)
 			*chain = temp;
 			break ;
 		}
+		*chain = (*chain)->next;
 	}
 	err->get_cmd_chain = 0;
 	return (cmd_chain);
+}
+
+//A function that checks if the token chain is invalid
+int	ft_check_token_chain(t_token *chain, t_error *err)
+{
+	t_token	*cur;
+
+	if (!chain || chain->type == T_PIPE_OP)
+		return (err->check_token_chain = 1);
+	cur = chain;
+	while (cur != NULL)
+	{
+		if (cur->type == T_NONE)
+			return (err->check_token_chain = 1);
+		if (cur->type == T_PIPE_OP)
+		{
+			if (!(cur->next))
+				return (err->check_token_chain = 1);
+			if (cur->next->type != T_WORD || cur->next->type != T_REDIR)
+				return (err->check_token_chain = 1);
+		}
+		if (cur->type == T_REDIR
+				&& (!(cur->next) || cur->next->type != T_WORD))
+			return (err->check_token_chain = 1);
+		cur = cur->next;
+	}
+	return (err->check_token_chain = 0);
 }
