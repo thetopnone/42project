@@ -27,6 +27,7 @@
 typedef enum s_quote_type
 {
 	Q_NONE,
+	Q_BOTH,
 	Q_DOUBLE,
 	Q_SINGLE
 } t_quote_type;
@@ -112,11 +113,11 @@ typedef struct s_error
 	int	get_cmd_chain;
 	int	get_red_chain;
 	int	check_token_chain;
-	int	parser
+	int	parser;
 } t_error;
 
 //-----------------------------------------------------------------------------
-//PARSER FUNCTIONS
+//PARSER FUNCTIONS (1)
 //-----------------------------------------------------------------------------
 t_pipe		*ft_parser(t_token **chain);
 //-----------------------------------------------------------------------------

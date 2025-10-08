@@ -121,7 +121,7 @@ int	ft_del_pipeline(t_pipe **pipeline, t_error *err)
 {
 	t_pipe	**ref;
 	t_pipe	*temp;
-
+	
 	if (!pipeline)
 		return (err->del_pipeline = 1);
 	ref = pipeline;

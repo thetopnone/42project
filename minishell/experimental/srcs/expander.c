@@ -12,7 +12,32 @@
 
 #include "../minishell.h"
 
-int	ft_expand_string
+//A functions that returns the next occurence of stated quote type
+char	*ft_get_next_quote(char *string, t_quote_type q_type)
+{
+	char	*next;
+
+	if  (!string || q_type == Q_NONE)
+		return (NULL);
+	if (q_type == Q_DOUBLE )
+		next = ft_strchr(string, '\"');
+	if (q_type == Q_SINGLE)
+		next = ft_strchr(string, '\'');
+	if (q_type == Q_BOTH)
+	{
+		if (ft_strchr(string, '\'') < ft_strchr(string, '\"'))
+			next = ft_strchr(string, '\'');
+		else
+			next = ft_strchr(string, '\"');
+	}
+	return (next);
+}
+
+//A function that exapands the content of a string inside the pipeline
+int	ft_expand_string(char **string)
+{
+}
+
 //This function will get inside the pipeline and expand on all the variables 
 //that need to be expanded
 //It only needs to handle $word , $? ,${word}line 
