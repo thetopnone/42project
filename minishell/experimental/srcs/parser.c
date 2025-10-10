@@ -25,6 +25,7 @@ t_pipe	*ft_parser(t_token **chain, t_error *err)
 	pipeline = NULL;
 	while ((*chain))
 		ft_add_pipe(&pipeline, chain, err);
-	err->parser = 0;
+	if (ft_error_check_parser(err) == 1)
+		err->parser = 1;
 	return (pipeline);
 }

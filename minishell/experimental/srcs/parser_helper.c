@@ -81,6 +81,3 @@ int	ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err)
 		(ft_get_last_pipe(*pipeline, err))->next = ft_new_pipe(chain, err);
 	return (err->add_pipe = 0);
 }
-
-//A function that checks if the pipe is valid
-
