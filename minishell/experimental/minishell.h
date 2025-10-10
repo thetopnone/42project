@@ -96,6 +96,12 @@ typedef struct s_pipe
 	struct s_pipe	*next;
 } t_pipe;
 
+//This structure holds information about the shell state, like the exit status
+//of the last executed command
+typedef struct s_shell
+{
+	int	last_exit;
+} t_shell;
 //This is an error holding struct. We will pass t_error variables as
 //arguments so that functions will assign the value to the specific 
 //error type
