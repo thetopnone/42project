@@ -100,7 +100,8 @@ typedef struct s_pipe
 //of the last executed command
 typedef struct s_shell
 {
-	int	last_exit;
+	char	*last_cmd;
+	int		last_exit;
 } t_shell;
 //This is an error holding struct. We will pass t_error variables as
 //arguments so that functions will assign the value to the specific 
