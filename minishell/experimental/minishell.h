@@ -161,6 +161,11 @@ int			ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
 char		*ft_get_dollar(char *str, t_error *err);
 int			ft_expand_dollar(char **dollar, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
+//EXPANDER HELPER 2 (5)
+//-----------------------------------------------------------------------------
+char	    *ft_remove_char(char **s, char *c);
+int         ft_remove_quotes(char **s, t_error *err);
+//-----------------------------------------------------------------------------
 //REDIRECTION HELPER (4)
 //-----------------------------------------------------------------------------
 t_redirect	*ft_new_redir(t_redir_type type, char *target);
