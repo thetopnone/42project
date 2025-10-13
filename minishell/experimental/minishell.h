@@ -123,12 +123,13 @@ typedef struct s_error
 	int	parser;
 	int	envlen;
 	int	get_start;
-	int	get_result;
 	int	get_dollar;
 	int	expand_dollar;
 	int	expand_str;
 	int	expand_redir;
 	int	expand_cmd;
+	int	rmquotes;
+	int	set_cmd_argv;
 	int	expander;
 } t_error;
 
@@ -137,7 +138,7 @@ typedef struct s_error
 //-----------------------------------------------------------------------------
 t_pipe		*ft_parser(t_token **chain);
 //-----------------------------------------------------------------------------
-//PARSER HELPER (4)
+//PARSER HELPER 1 (4)
 //-----------------------------------------------------------------------------
 size_t		ft_pipelen(t_token *chain);
 t_pipe		*ft_get_last_pipe(t_pipe *pipeline, t_error *err);
@@ -151,20 +152,25 @@ int			ft_purify_cmd_chain(t_token *cmd_chain, t_error *err);
 t_token		*ft_get_cmd_chain(t_token **chain, t_error *err);
 int			ft_check_token_chain(t_token *chain, t_error *err);
 //-----------------------------------------------------------------------------
-//EXPANDER (5)
+//EXPANDER (4)
 //-----------------------------------------------------------------------------
-int			ft_isenvchar(int c);
+
 int			ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
-//EXPANDER HELPER (5)
+//EXPANDER HELPER 1 (5)
 //-----------------------------------------------------------------------------
 char		*ft_get_dollar(char *str, t_error *err);
 int			ft_expand_dollar(char **dollar, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 2 (5)
 //-----------------------------------------------------------------------------
-char	    *ft_remove_char(char **s, char *c);
-int         ft_remove_quotes(char **s, t_error *err);
+char	    *ft_rmchar(char **s, char *c);
+int         ft_rmquotes(char **s, t_error *err);
+//-----------------------------------------------------------------------------
+//EXPANDER HELPER 3 (2)
+//-----------------------------------------------------------------------------
+int			ft_isenvchar(int c);
+int			ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //REDIRECTION HELPER (4)
 //-----------------------------------------------------------------------------
@@ -189,6 +195,6 @@ int			ft_del_redir_chain(t_redirect **red_chain, t_redirect *redir,
 int			ft_del_cmd(t_cmd **command, t_error *err);
 int			ft_del_pipeline(t_pipe **pipeline, t_error *err);
 //-----------------------------------------------------------------------------
-//CLEANER HELPER (1)
+//CLEANER HELPER 1 (1)
 //-----------------------------------------------------------------------------
 void		ft_del_string(char **string);

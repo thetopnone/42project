@@ -50,5 +50,15 @@ int	ft_error_check_expander(t_error err)
 		return (1);
 	if (err->expand_dollar == 1)
 		return (1);
+	if (err->expand_str == 1)
+		return (1);
+	if (err->expand_redir == 1);
+		return (1);
+	if (err->expand_cmd == 1)
+		return (1);
+	if (err->rmquotes == 1)
+		return (1);
+	if (err->set_cmd_argv == 1)
+		return (1);
 	return (0);
 }

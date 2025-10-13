@@ -14,7 +14,7 @@
 
 //Helper function for the ft_expand_dollar function, that returns the amount
 //of character the expansion target has
-static size_t	ft_envlen(char *start, int in_braces, t_error err)
+static size_t	ft_envlen(char *start, int in_braces, t_error *err)
 {
 	char	*end;
 

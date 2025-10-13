@@ -64,7 +64,7 @@ size_t	ft_chainlen(t_token *chain)
 	if (!chain)
 		return (0);
 	res = 0;
-	while (chain->type != T_END)
+	while (*chain && chain->type != T_END)
 	{
 		res++;
 		chain = chain->next;

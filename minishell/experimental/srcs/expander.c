@@ -12,16 +12,6 @@
 
 #include "../minishell.h"
 
-//A function that detects if the currect character is a valid characted for
-//an env variable
-//charcter can be a letter, a number (NOT IN FIRST SPOT),
-int	ft_isenvchar(int c)
-{
-	if (ft_isalnum(c) == 1 || c == '_')
-		return (1);
-	return (0);
-}
-
 //A function that expands all $ in  a given string
 static int	ft_expand_str(char **str, t_shell *shell, t_error *err)
 {
@@ -76,6 +66,7 @@ int	ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err)
 		red_chain = pipeline->command->red_chain;
 		ft_expand_cmd(cmd_chain, shell, err);
 		ft_expand_redir(red_chain, shell, err);
+		ft_set_cmd_argv(pipeline, shell, err);
 		pipeline = pipeline->next;
 		if (ft_error_check_expander(err) == 1)
 			return (err->expander = 1);

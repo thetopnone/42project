@@ -49,7 +49,8 @@ static char	*ft_get_first_quote(char *s)
 //We pass the address of the string and the address of the char
 //to remove
 //DRAW THIS ON BOARD SO YOU MAKE SURE IT RETURS THE RIGHT SPOT!!!
-char	*ft_remove_char(char **s, char *c)
+//Checked with the board, all looks good !
+char	*ft_rmchar(char **s, char *c)
 {
 	char	*ref;
 	char	*new;
@@ -68,22 +69,21 @@ char	*ft_remove_char(char **s, char *c)
 //We need a function to remove any quotes that are still in the
 //command argument
 //We need to pass the address of the target
-int	ft_remove_quotes(char **s, t_error *err)
+int	ft_rmquotes(char **s, t_error *err)
 {
 	char	*ref;
 	char	*o_quote;
 	char	*c_quote;
 
 	if (!s || !*s)
-		return (err->remove_quotes = 1);
+		return (err->rmquotes = 1);
 	ref = *s;
 	while (*ref)
 	{
 		o_quote = ft_get_first_quote(ref);
 		c_quote = ft_get_next_quote(ref, ft_quote_type(*o_quote));
-		ref = ft_remove_char(s, o_quote);
-		ref = ft_remove_char(s, c_quote);
+		ref = ft_rmchar(s, o_quote);
+		ref = ft_rmchar(s, c_quote);
 	}
-	return (err->remove_quotes = 0);
+	return (err->rmquotes = 0);
 }
-//We need a function to set the argv for the executor to runs
