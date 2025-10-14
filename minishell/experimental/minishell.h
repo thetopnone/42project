@@ -96,6 +96,16 @@ typedef struct s_pipe
 	struct s_pipe	*next;
 } t_pipe;
 
+//Envar structure will be holding lal the necessary information about 
+//environmental variables
+typedef struct s_envar
+{
+	char			*key;
+	char			*value;
+	int				is_exported;
+	struct s_envar	*next;
+} t_envar;
+
 //This structure holds information about the shell state, like the exit status
 //of the last executed command
 typedef struct s_shell
@@ -103,6 +113,7 @@ typedef struct s_shell
 	char	*last_cmd;
 	int		last_exit;
 } t_shell;
+
 //This is an error holding struct. We will pass t_error variables as
 //arguments so that functions will assign the value to the specific 
 //error type
@@ -134,7 +145,7 @@ typedef struct s_error
 } t_error;
 
 //-----------------------------------------------------------------------------
-//PARSER FUNCTIONS (1)
+//PARSER (1)
 //-----------------------------------------------------------------------------
 t_pipe		*ft_parser(t_token **chain);
 //-----------------------------------------------------------------------------
@@ -154,7 +165,6 @@ int			ft_check_token_chain(t_token *chain, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER (4)
 //-----------------------------------------------------------------------------
-
 int			ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 1 (5)
