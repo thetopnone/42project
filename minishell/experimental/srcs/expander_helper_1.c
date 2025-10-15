@@ -14,7 +14,7 @@
 
 //Helper function for the ft_expand_dollar function, that returns the amount
 //of character the expansion target has
-static size_t	ft_envlen(char *start, int in_braces, t_error *err)
+static size_t	ft_varlen(char *start, int in_braces, t_error *err)
 {
 	char	*end;
 
@@ -68,10 +68,10 @@ static char	*ft_get_result(char *start, t_shell *shell, int in_braces)
 	}
 	else
 	{
-		target = ft_calloc(ft_envlen(start, in_braces, err) + 1, sizeof(char));
-		ft_strlcpy(target, start, ft_envlen(start, in_braces, err) + 1);
+		target = ft_calloc(ft_varlen(start, in_braces, err) + 1, sizeof(char));
+		ft_strlcpy(target, start, ft_varlen(start, in_braces, err) + 1);
 		env = getenv(target);
-		result = ft_strjoin(env, &start[ft_envlen(start, in_braces, err)]);
+		result = ft_strjoin(env, &start[ft_varlen(start, in_braces, err)]);
 		if (env)
 			free(env);
 		free(target);
