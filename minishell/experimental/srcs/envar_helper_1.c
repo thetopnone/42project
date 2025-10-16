@@ -10,40 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-//we will use the 3 argument form of int main(argc, argv, envp)
-//Envp is a pointer to the environment variable array from the system
+//we will use the 3 argument form of int main(argc, argv, envc)
+//envc is a pointer to the environment variable array from the system
 //We need to create our own copy of this array in the form of a linked list
 //is_exported will always be set to 1 in our minishell because we will only
 //be adding env variables using export. It will still be added as a flag to
 //keep it accurate and close to the bash version of the export function
 //
-//This function will be checking if a string consists of valid character for
-//a env variable name
-int		ft_valid_env(char *key, t_error *err)
-{
-	if (!key)
-		return (err->valid_env = 1);
-	while (*key && ft_isenvchar(*key))
-		key++;
-	if (*key)
-		return (err->valid_env = 1);
-	return (err->valid_env = 0);
-}
-
 //This function returns a pionter to the last node in a t_envar list
-t_envar	*ft_get_last_envar(t_envar *envp, t_error err)
+t_envar	*ft_get_last_envar(t_envar *envc, t_error err)
 {
-	if (!envp)
+	if (!envc)
 	{
 		err->get_last_envar = 1;
 		return (NULL);
 	}
-	while (*(envp->next))
-		envp++;
+	while (*(envc->next))
+		envc++;
 	err->get_last_env = 0;
-	return (envp);
+	return (envc);
 }
 
 //This function will create a new envar node with the arguments given
@@ -66,26 +53,26 @@ t_envar	*ft_new_envar(char *key, char *value, int is_exported, t_error *err)
 }
 
 //We need a function that sets the exportable env vars array
-int	ft_add_envar(t_envar **envp, t_envar *var, t_error *err)
+int	ft_add_envar(t_envar **envc, t_envar *var, t_error *err)
 {
-	if (!envp || !var)
+	if (!envc || !var)
 		return (err->add_envar = 1);
-	if (!*envp)
-		*envp = var;
+	if (!*envc)
+		*envc = var;
 	else
-		ft_get_last_envar(*envp, err)->next = var;
+		ft_get_last_envar(*envc, err)->next = var;
 	return (err->add_envar = 0);
 }
 
 //A function to delete the stated var from envar
-int	ft_del_envar(t_envar **envp, t_envar *var, t_error *err)
+int	ft_del_envar(t_envar **envc, t_envar *var, t_error *err)
 {
 	t_envar	*prev;
 	t_envar	*cur;
 
-	if (!envp || !var)
+	if (!envc || !var)
 		return (err->del_envar = 1);
-	cur = *envp;
+	cur = *envc;
 	prev = NULL;
 	while (*cur && cur->key != var->key)
 	{
@@ -97,7 +84,7 @@ int	ft_del_envar(t_envar **envp, t_envar *var, t_error *err)
 	if (*prev)
 		prev->next = cur->next;
 	else
-		(*envp = *envp->next)
+		(*envc = *envc->next)
 	free(cur->key);
 	free(cur->value);
 	free(cur);
@@ -106,39 +93,17 @@ int	ft_del_envar(t_envar **envp, t_envar *var, t_error *err)
 
 //A function that returns a pointer to an env variable that has the
 //stated key
-t_envar	*ft_get_envar(t_envar *envp, char *key, t_error *err)
+t_envar	*ft_get_envar(t_envar *envc, char *key, t_error *err)
 {
-	if (!envp || !key)
+	if (!envc || !key)
 	{
 		err->get_envar = 1;
 		return (NULL);
 	}
-	while (!ft_strncmp(envp->key, key, ft_strlen(key)))
-		envp = envp->next;
+	while (!ft_strncmp(envc->key, key, ft_strlen(key)))
+		envc = envc->next;
 	err->get_envar = 0;
-	if (!*envp)
+	if (!*envc)
 		return (NULL);
-	return(envp);
-}
-
-//A function that returns the amount of environment variables in the t_envar
-//chain
-size_t	ft_envar_amount(t_envar *envp, t_error *err)
-{
-	size_t	res;
-
-	if (!envp)
-		return (0);
-	res = 0;
-	while (*envp)
-	{
-		res++;
-		envp = envp->next;
-	}
-	return (res);
-}
-
-//We need a function that set the envp array with all available enva
-char	**ft_set_envp(t_envar *envp, t_error *err)
-{
+	return(envc);
 }

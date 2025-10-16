@@ -208,3 +208,19 @@ int			ft_del_pipeline(t_pipe **pipeline, t_error *err);
 //CLEANER HELPER 1 (1)
 //-----------------------------------------------------------------------------
 void		ft_del_string(char **string);
+//-----------------------------------------------------------------------------
+//ENVAR HELPER 1 (5)
+//-----------------------------------------------------------------------------
+t_envar		*ft_get_last_envar(t_envar *envc, t_error err);
+t_envar		*ft_new_envar(char *key, char *value,
+				int is_exported, t_error *err);
+int			ft_add_envar(t_envar **envc, t_envar *var, t_error *err);
+int			ft_del_envar(t_envar **envc, t_envar *var, t_error *err);
+t_envar		*ft_get_envar(t_envar *envc, char *key, t_error *err);
+//-----------------------------------------------------------------------------
+//ENVAR HELPER 2 (3)
+//-----------------------------------------------------------------------------
+int			ft_valid_env(char *key, t_error *err);
+size_t		ft_envar_amount(t_envar *envc, t_error *err);
+char		**ft_set_envp(t_envar *envc, t_error *err);
+
