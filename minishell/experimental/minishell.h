@@ -147,63 +147,63 @@ typedef struct s_error
 //-----------------------------------------------------------------------------
 //PARSER (1)
 //-----------------------------------------------------------------------------
-t_pipe		*ft_parser(t_token **chain);
+t_pipe			*ft_parser(t_token **chain);
 //-----------------------------------------------------------------------------
 //PARSER HELPER 1 (4)
 //-----------------------------------------------------------------------------
-size_t		ft_pipelen(t_token *chain);
-t_pipe		*ft_get_last_pipe(t_pipe *pipeline, t_error *err);
-t_pipe		*ft_new_pipe(t_token **chain, t_error *err);
-int			ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err);
+size_t			ft_pipelen(t_token *chain);
+t_pipe			*ft_get_last_pipe(t_pipe *pipeline, t_error *err);
+t_pipe			*ft_new_pipe(t_token **chain, t_error *err);
+int				ft_add_pipe(t_pipe **pipeline, t_token **chain, t_error *err);
 //-----------------------------------------------------------------------------
 //PARSER HELPER 2 (5)
 //-----------------------------------------------------------------------------
-t_redirect	*ft_get_red_chain(t_token *cmd_chain);
-int			ft_purify_cmd_chain(t_token *cmd_chain, t_error *err);
-t_token		*ft_get_cmd_chain(t_token **chain, t_error *err);
-int			ft_check_token_chain(t_token *chain, t_error *err);
+t_redirect		*ft_get_red_chain(t_token *cmd_chain);
+int				ft_purify_cmd_chain(t_token *cmd_chain, t_error *err);
+t_token			*ft_get_cmd_chain(t_token **chain, t_error *err);
+int				ft_check_token_chain(t_token *chain, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER (4)
 //-----------------------------------------------------------------------------
-int			ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
+int				ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 1 (5)
 //-----------------------------------------------------------------------------
-char		*ft_get_dollar(char *str, t_error *err);
-int			ft_expand_dollar(char **dollar, t_shell *shell, t_error *err);
+char			*ft_get_dollar(char *str, t_error *err);
+int				ft_expand_dollar(char **dollar, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 2 (5)
 //-----------------------------------------------------------------------------
-char	    *ft_rmchar(char **s, char *c);
-int         ft_rmquotes(char **s, t_error *err);
+char			*ft_rmchar(char **s, char *c);
+int         	ft_rmquotes(char **s, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 3 (2)
 //-----------------------------------------------------------------------------
-int			ft_isenvchar(int c);
-int			ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err);
+int				ft_isenvchar(int c);
+int				ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //REDIRECTION HELPER (4)
 //-----------------------------------------------------------------------------
-t_redirect	*ft_new_redir(t_redir_type type, char *target);
-t_redirect	*ft_get_last_redir(t_redirect *red_chain);
-void		ft_add_redir(t_redirect **red_chain, t_redirect *redirect);
-size_t		ft_redirlen(t_redirect *red_chain);
+t_redirect		*ft_new_redir(t_redir_type type, char *target);
+t_redirect		*ft_get_last_redir(t_redirect *red_chain);
+void			ft_add_redir(t_redirect **red_chain, t_redirect *redirect);
+size_t			ft_redirlen(t_redirect *red_chain);
 //-----------------------------------------------------------------------------
 //TOKENS HELPER (4)
 //-----------------------------------------------------------------------------
-t_token		*ft_new_token(t_token_type type, char *str);
-t_token		*ft_get_last_token(t_token *chain);
-void		ft_add_token(t_token **chain, t_token *token);
-size_t		ft_chainlen(t_token *chain);
+t_token			*ft_new_token(t_token_type type, char *str);
+t_token			*ft_get_last_token(t_token *chain);
+void			ft_add_token(t_token **chain, t_token *token);
+size_t			ft_chainlen(t_token *chain);
 //-----------------------------------------------------------------------------
 //CLEANER (5)
 //-----------------------------------------------------------------------------
-int			ft_del_token(t_token **chain, t_token *token, t_error *err);
-int			ft_del_token_chain(t_token **chain, t_error *err);
-int			ft_del_redir_chain(t_redirect **red_chain, t_redirect *redir,
-				t_error *err);
-int			ft_del_cmd(t_cmd **command, t_error *err);
-int			ft_del_pipeline(t_pipe **pipeline, t_error *err);
+int				ft_del_token(t_token **chain, t_token *token, t_error *err);
+int				ft_del_token_chain(t_token **chain, t_error *err);
+int				ft_del_redir_chain(t_redirect **red_chain, t_redirect *redir,
+					t_error *err);
+int				ft_del_cmd(t_cmd **command, t_error *err);
+int				ft_del_pipeline(t_pipe **pipeline, t_error *err);
 //-----------------------------------------------------------------------------
 //CLEANER HELPER 1 (1)
 //-----------------------------------------------------------------------------
@@ -211,16 +211,32 @@ void		ft_del_string(char **string);
 //-----------------------------------------------------------------------------
 //ENVAR HELPER 1 (5)
 //-----------------------------------------------------------------------------
-t_envar		*ft_get_last_envar(t_envar *envc, t_error err);
-t_envar		*ft_new_envar(char *key, char *value,
-				int is_exported, t_error *err);
-int			ft_add_envar(t_envar **envc, t_envar *var, t_error *err);
-int			ft_del_envar(t_envar **envc, t_envar *var, t_error *err);
-t_envar		*ft_get_envar(t_envar *envc, char *key, t_error *err);
+t_envar			*ft_get_last_envar(t_envar *envc, t_error err);
+t_envar			*ft_new_envar(char *key, char *value,
+					int is_exported, t_error *err);
+int				ft_add_envar(t_envar **envc, t_envar *var, t_error *err);
+int				ft_del_envar(t_envar **envc, t_envar *var, t_error *err);
+t_envar			*ft_get_envar(t_envar *envc, char *key, t_error *err);
 //-----------------------------------------------------------------------------
 //ENVAR HELPER 2 (3)
 //-----------------------------------------------------------------------------
-int			ft_valid_env(char *key, t_error *err);
-size_t		ft_envar_amount(t_envar *envc, t_error *err);
-char		**ft_set_envp(t_envar *envc, t_error *err);
-
+int				ft_valid_env(char *key, t_error *err);
+size_t			ft_envar_amount(t_envar *envc, t_error *err);
+char			**ft_set_envp(t_envar *envc, t_error *err);
+//-----------------------------------------------------------------------------
+//LEXER (1)
+//-----------------------------------------------------------------------------
+t_token			*lexer(char *input);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 1 (5)
+//-----------------------------------------------------------------------------
+bool			ft_squote_check(char **s);
+bool			ft_dquote_check(char **s);
+t_quote_type	ft_set_qtype(char *str);
+t_token_type	ft_set_token_type(char *string);
+void			ft_create_chain(t_token **chain, char **input_arr);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 2 (8)
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
