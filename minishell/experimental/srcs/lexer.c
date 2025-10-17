@@ -19,9 +19,10 @@ t_token	*lexer(char *input)
 
 	chain = NULL;
 	ft_create_chain(&chain, ft_split_mini(input,' '));
+	print_token_chain(chain, ft_chainlen(chain));
 	return (chain);
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	t_token	*chain;
@@ -32,4 +33,4 @@ int	main(int argc, char **argv)
 		print_token_chain(chain, ft_chainlen(chain));
 	}
 	return (1);
-}
+}*/

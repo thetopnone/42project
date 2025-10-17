@@ -14,5 +14,15 @@
 
 int	main(int argc, char *argv[])
 {
-	
+	t_token	*chain;
+	t_pipe	*pipeline;
+	t_error	*error;
+
+	if (argc == 2)
+	{
+		error = ft_calloc(1, sizeof(t_error));
+		chain = lexer(argv[1]);
+		pipeline = ft_parser(&chain, error);
+	}
+	return (0);
 }

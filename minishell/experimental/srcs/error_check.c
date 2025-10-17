@@ -15,7 +15,7 @@
 //This function will return 1 if there is ANY error in the parser, parser
 //helper and parser helper 2 functions. If they are clear then returns 0
 //excluding the ft_parser
-int	ft_error_check_parser(t_error err)
+int	ft_error_check_parser(t_error *err)
 {
 	if (err->get_last_pipe == 1)
 		return (1);
@@ -36,9 +36,9 @@ int	ft_error_check_parser(t_error err)
 
 //Similar to the last one, returns 1 if any expander functions have errors
 //excluding the ft_expander
-int	ft_error_check_expander(t_error err)
+int	ft_error_check_expander(t_error *err)
 {
-	if (err->expnad_str == 1)
+	if (err->expand_str == 1)
 		return (1);
 	if (err->expand_redir == 1)
 		return (1);
@@ -52,7 +52,7 @@ int	ft_error_check_expander(t_error err)
 		return (1);
 	if (err->expand_str == 1)
 		return (1);
-	if (err->expand_redir == 1);
+	if (err->expand_redir == 1)
 		return (1);
 	if (err->expand_cmd == 1)
 		return (1);

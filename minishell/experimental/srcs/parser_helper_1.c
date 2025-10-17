@@ -63,7 +63,7 @@ t_pipe	*ft_new_pipe(t_token **chain, t_error *err)
 	pipe->command->cmd_chain = ft_get_cmd_chain(chain, err);
 	pipe->cmd_amount = ft_chainlen(pipe->command->cmd_chain);
 	pipe->command->red_chain = ft_get_red_chain(pipe->command->cmd_chain);
-	ft_purify_cmd_chain(&(pipe->command->cmd_chain));
+	ft_purify_cmd_chain(pipe->command->cmd_chain, err);
 	pipe->next = NULL;
 	return (pipe);
 }

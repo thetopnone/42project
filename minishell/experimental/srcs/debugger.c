@@ -13,6 +13,36 @@ void    print_token_chain(t_token *chain, int token_amount)
     }
 }
 
+void	print_redir_chain(t_redirect *red_chain)
+{
+	ft_printf("\n		REDIRECTION-------------\n");
+	while (red_chain)
+	{
+		ft_printf("			-------------------------\n");
+		ft_printf("				TYPE:	%d\n", red_chain->type);
+		ft_printf("				TARGET:	%s\n", red_chain->target);
+		ft_printf("				Q_TYPE:	%d\n", red_chain->q_type);
+		ft_printf("				NEXT:	%p\n", red_chain->next);
+		ft_printf("			-------------------------\n");
+        red_chain = red_chain->next;
+	}
+}
+
+void    print_pipeline(t_pipe *pipeline)
+{
+	ft_printf("PIPELINE-----------------");
+	while (pipeline)
+	{
+		ft_printf("----------------------------------------\n");
+		print_token_chain(pipeline->command->cmd_chain, ft_chainlen(pipeline->command->cmd_chain));
+		print_redir_chain(pipeline->command->red_chain);
+		ft_printf("		CMD_AMOUNT: %d\n", pipeline->cmd_amount);
+		ft_printf("		NEXT:		%p\n", pipeline->next);
+		ft_printf("----------------------------------------\n");
+        pipeline = pipeline->next;
+	}
+}
+
 char    *s_token_type(int num)
 {
     char *array[] = {"T_NONE", "T_WORD", "T_REDIR", "T_PIPE_OP", "T_END"};
@@ -29,10 +59,10 @@ char    *s_qtype(int num)
 
 void    s_token_dgb(t_token *token)
 { 
-    printf("TOKEN->STRING: %s\n", token->string);
-    printf("TOKEN->TYPE: %s\n", s_token_type(token->type));
-    printf("TOKEN->Q_TYPE: %s\n", s_qtype(token->q_type));
-    printf("TOKEN->NEXT: %p\n", token->next);
+    printf("	TOKEN->STRING: %s\n", token->string);
+    printf("	TOKEN->TYPE: %s\n", s_token_type(token->type));
+    printf("	TOKEN->Q_TYPE: %s\n", s_qtype(token->q_type));
+    printf("	TOKEN->NEXT: %p\n", token->next);
 }
 
 char    *s_redir_type(int num)

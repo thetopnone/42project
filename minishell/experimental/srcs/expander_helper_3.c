@@ -20,12 +20,12 @@ int	ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err)
 	t_token	*cmd_chain;
 	char	*ref;
 
-	if (!shell || !command)
+	if (!shell || !pipe)
 		return (err->set_cmd_argv = 1);
 	cmd_chain = pipe->command->cmd_chain;
 	ref = NULL;
 	pipe->command->argv = ft_calloc(pipe->cmd_amount + 1, sizeof(char *));
-	while (cmd_chain != T_END)
+	while (cmd_chain->type != T_END)
 	{
 		ref = cmd_chain->string;
 		*(pipe->command->argv) = ft_strdup(ref);

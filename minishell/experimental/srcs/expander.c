@@ -21,7 +21,7 @@ static int	ft_expand_str(char **str, t_shell *shell, t_error *err)
 		return(err->expand_str = 1);
 	ref = *str;
 	while (ft_get_dollar(ref, err) != NULL)
-		ft_expand_dollar(&ft_get_dollar(ref, err), shell, err);
+		ft_expand_dollar(ft_get_dollar(ref, err), shell, err);
 	return (err->expand_str = 0);
 }
 
@@ -48,6 +48,7 @@ static int	ft_expand_cmd(t_token *cmd_chain, t_shell *shell, t_error *err)
 		ft_expand_str(&(cmd_chain->string), shell, err);
 		cmd_chain = cmd_chain->next;
 	}
+	return (err->expand_cmd = 0);
 }
 
 //This function will get inside the pipeline and expand on all the variables 

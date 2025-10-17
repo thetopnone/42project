@@ -26,7 +26,6 @@ t_token	*ft_new_token(t_token_type type, char *str, t_quote_type q_type)
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
-	ft_bzero(token);
 	token->type = type;
 	token->string = ft_strdup(str);
 	token->q_type = q_type;
@@ -64,7 +63,7 @@ size_t	ft_chainlen(t_token *chain)
 	if (!chain)
 		return (0);
 	res = 0;
-	while (*chain && chain->type != T_END)
+	while (chain && chain->type != T_END)
 	{
 		res++;
 		chain = chain->next;

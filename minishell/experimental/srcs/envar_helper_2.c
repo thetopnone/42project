@@ -39,13 +39,17 @@ size_t	ft_envar_amount(t_envar *envc, t_error *err)
 	size_t	res;
 
 	if (!envc)
+	{
+		err->envar_amount = 1;
 		return (0);
+	}
 	res = 0;
-	while (*envc)
+	while (envc)
 	{
 		res++;
 		envc = envc->next;
 	}
+	err->envar_amount = 0;
 	return (res);
 }
 
@@ -64,7 +68,7 @@ char	**ft_set_envp(t_envar *envc, t_error *err)
 	envp = ft_calloc(ft_envar_amount(envc, err), sizeof(char *));
 	key = NULL;
 	value = NULL;
-	while(*envc)
+	while(envc)
 	{
 		key = ft_strjoin(ft_strdup(envc->key), "=");
 		value = ft_strdup(envc->value);

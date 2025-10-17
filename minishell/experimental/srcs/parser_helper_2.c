@@ -46,7 +46,7 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 				return (NULL);
 			}
 			r_type = ft_get_redir_type(cur->string);
-			ft_add_redir(&red_chain, ft_new_redir(red_type, cur->next->string,
+			ft_add_redir(&red_chain, ft_new_redir(r_type, cur->next->string,
 							cur->next->q_type));
 			cur = cur->next;
 		}
@@ -59,10 +59,12 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 {
 	t_token	**target;
+	t_token	*temp;
 
 	if (!cmd_chain)
 		return (err->purify_cmd_chain = 1);
 	if (!(*cmd_chain))
+		return (err->purify_cmd_chain = 0);
 	target = cmd_chain;
 	while ((*target)->type != T_END)
 	{
@@ -71,8 +73,8 @@ int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 			if (!(*target)->next)
 				return (err->purify_cmd_chain = 1);
 			temp = (*target)->next->next;
-			ft_del_token(cmd_chain, (*target)->next);
-			ft_del_token(cmd_chain, *target);
+			ft_del_token(cmd_chain, (*target)->next, err);
+			ft_del_token(cmd_chain, *target, err);
 		}
 		*target = temp;
 	}
@@ -124,7 +126,7 @@ int	ft_check_token_chain(t_token *chain, t_error *err)
 		{
 			if (!(cur->next))
 				return (err->check_token_chain = 1);
-			if (cur->next->type != T_WORD || cur->next->type != T_REDIR)
+			if (cur->next->type != T_WORD && cur->next->type != T_REDIR)
 				return (err->check_token_chain = 1);
 		}
 		if (cur->type == T_REDIR

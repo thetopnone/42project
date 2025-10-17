@@ -51,7 +51,7 @@ static char	*ft_get_start(char *dollar, int *in_braces, t_error *err)
 }
 
 //A function that sets the result char * of the expanding the $ sign
-static char	*ft_get_result(char *start, t_shell *shell, int in_braces)
+static char	*ft_get_result(char *start, t_shell *shell, int in_braces, t_error *err)
 {
 	char	*target;
 	char	*result;
@@ -63,7 +63,7 @@ static char	*ft_get_result(char *start, t_shell *shell, int in_braces)
 	if (*start == '?')
 	{
 		target = ft_itoa(shell->last_exit);
-		result = ft_strjoin(target, &(start + 1));
+		result = ft_strjoin(target, start + 1);
 		free(target);
 	}
 	else
@@ -108,7 +108,7 @@ char	*ft_get_dollar(char *str, t_error *err)
 }
 
 //A function that exapands the content of a dollar inside a string
-int	ft_expand_dollar(char **dollar, t_shell *shell, t_error *err)
+int	ft_expand_dollar(char *dollar, t_shell *shell, t_error *err)
 {
 	char	*start;
 	char	*result;
@@ -118,13 +118,13 @@ int	ft_expand_dollar(char **dollar, t_shell *shell, t_error *err)
 	if (!dollar || !(*dollar))
 		return (err->expand_dollar = 1);
 	in_braces = 0;
-	start = ft_get_start(*dollar, &in_braces, err);
+	start = ft_get_start(dollar, &in_braces, err);
 	if (!start)
 		return (err->expand_dollar = 1);
-	temp = ft_substr(*dollar, 0, ft_strchr(*dollar, '$') - *dollar);
-	result = ft_strjoin(temp , ft_get_result(start, shell, in_braces));
+	temp = ft_substr(dollar, 0, ft_strchr(dollar, '$') - dollar);
+	result = ft_strjoin(temp , ft_get_result(start, shell, in_braces, err));
 	free(temp);
-	free(*dollar);
-	*dollar = result;
+	free(dollar);
+	dollar = result;
 	return (err->expand_dollar = 0);
 }

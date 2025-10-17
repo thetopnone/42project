@@ -20,16 +20,16 @@
 //keep it accurate and close to the bash version of the export function
 //
 //This function returns a pionter to the last node in a t_envar list
-t_envar	*ft_get_last_envar(t_envar *envc, t_error err)
+t_envar	*ft_get_last_envar(t_envar *envc, t_error *err)
 {
 	if (!envc)
 	{
 		err->get_last_envar = 1;
 		return (NULL);
 	}
-	while (*(envc->next))
+	while (envc->next)
 		envc++;
-	err->get_last_env = 0;
+	err->get_last_envar = 0;
 	return (envc);
 }
 
@@ -49,7 +49,7 @@ t_envar	*ft_new_envar(char *key, char *value, int is_exported, t_error *err)
 	res->value = ft_strdup(value);
 	res->is_exported = is_exported;
 	err->new_envar = 0;
-	return (*res)
+	return (res);
 }
 
 //We need a function that sets the exportable env vars array
@@ -74,17 +74,17 @@ int	ft_del_envar(t_envar **envc, t_envar *var, t_error *err)
 		return (err->del_envar = 1);
 	cur = *envc;
 	prev = NULL;
-	while (*cur && cur->key != var->key)
+	while (cur && ft_strncmp(cur->key, var->key, ft_strlen(cur->key) + 1) != 0)
 	{
 		prev = cur;
 		cur = cur->next;
 	}
-	if (!*cur)
+	if (!cur)
 		return (err->del_envar = 1);
-	if (*prev)
+	if (prev)
 		prev->next = cur->next;
 	else
-		(*envc = *envc->next)
+		*envc = (*envc)->next;
 	free(cur->key);
 	free(cur->value);
 	free(cur);
@@ -103,7 +103,7 @@ t_envar	*ft_get_envar(t_envar *envc, char *key, t_error *err)
 	while (!ft_strncmp(envc->key, key, ft_strlen(key)))
 		envc = envc->next;
 	err->get_envar = 0;
-	if (!*envc)
+	if (!envc)
 		return (NULL);
 	return(envc);
 }

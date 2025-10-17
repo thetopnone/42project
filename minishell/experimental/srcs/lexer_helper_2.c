@@ -80,15 +80,15 @@ static size_t	ft_word_amount(char const *s, char c)
 	}
 	return (words);
 }
-
-static void	ft_dquote_scope(char const **s, char c)
+/**/
+static void	ft_dquote_scope(char const **s)
 {
 	(*s)++;
 	while (**s && **s != '"')
 		(*s)++;
 }
 
-static void	ft_squote_scope(char const **s, char c)
+static void	ft_squote_scope(char const **s)
 {
 	(*s)++;
 	while (**s && **s != '\'')
@@ -104,9 +104,9 @@ static char	*ft_write_word(char const **s, char c)
 	while (**s)
 	{
 		if (**s == '"')
-			ft_dquote_scope(s, c);
+			ft_dquote_scope(s);
 		else if (**s == '\'')
-			ft_squote_scope(s, c);
+			ft_squote_scope(s);
 		else if (**s == c)
 			break ;
 		(*s)++;
