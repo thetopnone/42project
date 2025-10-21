@@ -19,20 +19,22 @@ int	ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err)
 {
 	t_token	*cmd_chain;
 	char	*ref;
+	int		i;
 
 	if (!shell || !pipe)
 		return (err->set_cmd_argv = 1);
 	cmd_chain = pipe->command->cmd_chain;
 	ref = NULL;
+	i = 0;
 	pipe->command->argv = ft_calloc(pipe->cmd_amount + 1, sizeof(char *));
 	while (cmd_chain->type != T_END)
 	{
 		ref = cmd_chain->string;
-		*(pipe->command->argv) = ft_strdup(ref);
-		(pipe->command->argv)++;
+		(pipe->command->argv)[i] = ft_strdup(ref);
+		i++;
 		cmd_chain = cmd_chain->next;
 	}
-	*(pipe->command->argv) = NULL;
+	(pipe->command->argv)[i] = NULL;
 	return (err->set_cmd_argv = 0);
 }
 

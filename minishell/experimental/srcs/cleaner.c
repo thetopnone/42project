@@ -33,7 +33,7 @@ int	ft_del_token(t_token **chain, t_token *token, t_error *err)
 	if (!cur)
 		return (err->del_token = 1);
 	temp = cur->next;
-	ft_del_string(&(cur->string));
+	ft_del_string(cur->string);
 	free(cur);
 	if (!prev)
 		(*chain) = temp;
@@ -57,11 +57,11 @@ int	ft_del_token_chain(t_token **chain, t_error *err)
 	while (*ref != NULL)
 	{
 		temp = (*ref)->next;
-		ft_del_string(&((*ref)->string));
+		ft_del_string((*ref)->string);
 		free(*ref);
 		*ref = temp;
 	}
-	free(chain);
+	//free(chain);
 	return (err->del_token_chain = 0);
 }
 
@@ -80,11 +80,11 @@ int	ft_del_redir_chain(t_redirect **red_chain, t_error *err)
 	while (*ref != NULL)
 	{
 		temp = (*ref)->next;
-		ft_del_string(&((*ref)->target));
+		ft_del_string((*ref)->target);
 		free(*ref);
 		*ref = temp;
 	}
-	free (red_chain);
+	//free (red_chain);
 	return (err->del_redir_chain = 0);
 }
 
@@ -92,21 +92,23 @@ int	ft_del_redir_chain(t_redirect **red_chain, t_error *err)
 int	ft_del_cmd(t_cmd **command, t_error *err)
 {
 	char	**ref;
+	int		i;
 
 	if (!command)
 		return (err->del_cmd = 1);
 	if (!(*command))
 		return (err->del_cmd = 0);
 	ref = NULL;
+	i = 0;
 	if ((*command)->argv)
 	{
 		ref = (*command)->argv;
-		while (*ref != NULL)
+		while (ref[i])
 		{
-			ft_del_string(ref);
-			ref++;
+			ft_del_string(ref[i]);
+			i++;
 		}
-		free ((*command)->argv);
+		//free ((*command)->argv);
 	}
 	ft_del_redir_chain(&((*command)->red_chain), err);
 	ft_del_token_chain(&((*command)->cmd_chain), err);
@@ -133,9 +135,9 @@ int	ft_del_pipeline(t_pipe **pipeline, t_error *err)
 		temp = (*ref)->next;
 		if ((*ref)->command)
 			ft_del_cmd(&((*ref)->command), err);
-		free(*ref);
+		//free(*ref);
 		*ref = temp;
 	}
-	free(pipeline);
+	free(*pipeline);
 	return (err->del_pipeline = 0);
 }

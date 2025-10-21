@@ -17,13 +17,19 @@ int	main(int argc, char *argv[])
 	t_token	*chain;
 	t_pipe	*pipeline;
 	t_error	*error;
+	t_shell	*shell;
 
 	if (argc == 2)
 	{
 		error = ft_calloc(1, sizeof(t_error));
+		shell = ft_calloc(1, sizeof(t_shell));
 		chain = lexer(argv[1]);
-        print_token_chain(chain, ft_chainlen(chain));
 		pipeline = ft_parser(&chain, error);
+		ft_expander(pipeline, shell, error);
+		print_pipeline(pipeline);
+		ft_del_pipeline(&pipeline, error);
+		free(error);
+		free(shell);
 	}
 	return (0);
 }

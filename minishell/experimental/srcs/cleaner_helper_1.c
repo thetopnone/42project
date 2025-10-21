@@ -13,11 +13,11 @@
 #include "../minishell.h"
 
 //Function that deletes an allocated string
-void	ft_del_string(char **string)
+void	ft_del_string(char *string)
 {
-	if (string && *string)
+	if (string)
 	{
-		free(*string);
-		*string = NULL;
+		free(string);
+		string = NULL;
 	}
 }

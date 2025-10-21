@@ -30,11 +30,11 @@ void	print_redir_chain(t_redirect *red_chain)
 
 void    print_pipeline(t_pipe *pipeline)
 {
-	ft_printf("PIPELINE-----------------");
+	ft_printf("PIPELINE-----------------\n");
 	while (pipeline)
 	{
 		ft_printf("----------------------------------------\n");
-		print_token_chain(pipeline->command->cmd_chain, ft_chainlen(pipeline->command->cmd_chain));
+		print_token_chain(pipeline->command->cmd_chain, ft_chainlen(pipeline->command->cmd_chain) + 1);
 		print_redir_chain(pipeline->command->red_chain);
 		ft_printf("		CMD_AMOUNT: %d\n", pipeline->cmd_amount);
 		ft_printf("		NEXT:		%p\n", pipeline->next);

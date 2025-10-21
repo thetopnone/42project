@@ -78,6 +78,7 @@ static size_t	ft_word_amount(char const *s, char c)
 		printf("ERROR\n");
 		exit(1);
 	}
+	printf("\nWords ; %zu\n", words);
 	return (words);
 }
 /**/
@@ -96,7 +97,7 @@ static void	ft_squote_scope(char const **s)
 }
 
 //This function handles the quotes in write word
-static int  ft_handle_quotes(char **s)
+static int  ft_handle_quotes(const char **s)
 {
 	if (!s || !*s)
 		return (-1);
@@ -108,7 +109,7 @@ static int  ft_handle_quotes(char **s)
 }
 
 //This function handles the redirections in write word
-static int	ft_handle_redir(char **s)
+static int	ft_handle_redir(const char **s)
 {
 	if (!s || !*s)
 		return (-1);
@@ -127,14 +128,12 @@ static int	ft_handle_redir(char **s)
 
 //Added redirection case where it will always treat redirections
 //and the target as different tokens
-//Also fixed a small bug for starting or trailing spaces
+//Also fixed a small bug for starting or trailing spaces (check)
 static char	*ft_write_word(char const **s, char c)
 {
 	char const	*start;
 	char		*word;
 
-	while (**s == c)
-		(*s)++;
 	start = *s;
 	while (**s)
 	{
@@ -156,6 +155,7 @@ static char	*ft_write_word(char const **s, char c)
 	return (word);
 }
 
+//(Check)
 static int	ft_split_logic(char **str_arr, char const *s, char c)
 {
 	size_t		index;
@@ -185,6 +185,7 @@ static int	ft_split_logic(char **str_arr, char const *s, char c)
 char	**ft_split_mini(char const *s, char c)
 {
 	char		**str_arr;
+	int		i=0;
 
 	if (!s || *s == '\0')
 	{
@@ -199,6 +200,11 @@ char	**ft_split_mini(char const *s, char c)
 	{
 		free(str_arr);
 		return (NULL);
+	}
+	while (str_arr[i])
+	{
+		printf("\nStr_arr[%d] : %s\n", i, str_arr[i]);
+		i++;
 	}
 	return (str_arr);
 }

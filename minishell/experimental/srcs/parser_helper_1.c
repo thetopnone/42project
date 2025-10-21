@@ -55,15 +55,13 @@ t_pipe	*ft_new_pipe(t_token **chain, t_error *err)
 		return (NULL);
 	}
 	pipe = ft_calloc(1, sizeof(t_pipe));
-	if (!pipe)
-	{
-		err->new_pipe = 1;
-		return (NULL);
-	}
+	pipe->command = ft_calloc(1, sizeof(t_cmd));
 	pipe->command->cmd_chain = ft_get_cmd_chain(chain, err);
+	print_token_chain(pipe->command->cmd_chain, ft_chainlen(pipe->command->cmd_chain) + 1);
 	pipe->cmd_amount = ft_chainlen(pipe->command->cmd_chain);
-	pipe->command->red_chain = ft_get_red_chain(pipe->command->cmd_chain);
+	pipe->command->red_chain = ft_get_red_chain(pipe->command->cmd_chain, err);
 	ft_purify_cmd_chain(&(pipe->command->cmd_chain), err);
+	//print_token_chain(pipe->command->cmd_chain, ft_chainlen(pipe->command->cmd_chain) + 1);
 	pipe->next = NULL;
 	return (pipe);
 }

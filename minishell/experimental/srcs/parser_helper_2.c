@@ -41,6 +41,7 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 
 	if (!cmd_chain)
 		return (NULL);
+	red_chain = NULL;
 	cur = cmd_chain;
 	while (cur && cur->type != T_END)
 	{
@@ -64,27 +65,27 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 //I need a function to purify the cmd_chain from redirections and the filenames
 int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 {
-	t_token	**target;
+	t_token	*target;
 	t_token	*temp;
 
 	if (!cmd_chain)
 		return (err->purify_cmd_chain = 1);
 	if (!(*cmd_chain))
 		return (err->purify_cmd_chain = 0);
-	target = cmd_chain;
-	while (*target && (*target)->type != T_END)
+	target = *cmd_chain;
+	while (target && target->type != T_END)
 	{
-		if ((*target)->type == T_REDIR)
+		if (target->type == T_REDIR)
 		{
-			if (!(*target)->next)
+			if (!target->next)
 				return (err->purify_cmd_chain = 1);
-			temp = (*target)->next->next;
-			ft_del_token(cmd_chain, (*target)->next, err);
-			ft_del_token(cmd_chain, *target, err);
-			*target = temp;
+			temp = target->next->next;
+			ft_del_token(cmd_chain, target->next, err);
+			ft_del_token(cmd_chain, target, err);
+			target = temp;
 		}
 		else
-			*target = (*target)->next;
+			target = target->next;
 		
 	}
 	return (err->purify_cmd_chain = 0);
@@ -127,6 +128,7 @@ int	ft_check_token_chain(t_token *chain, t_error *err)
 	if (!chain || chain->type == T_PIPE_OP)
 		return (err->check_token_chain = 1);
 	cur = chain;
+
 	while (cur != NULL)
 	{
 		if (cur->type == T_NONE)
