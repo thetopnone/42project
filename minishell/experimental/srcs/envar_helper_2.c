@@ -53,7 +53,7 @@ size_t	ft_envar_amount(t_envar *envc, t_error *err)
 	return (res);
 }
 
-//We need a function that set the envp array with all available envar
+//We need a function that returns the envp array with all available envar
 char	**ft_set_envp(t_envar *envc, t_error *err)
 {
 	char	**envp;

@@ -22,6 +22,7 @@ int	main(int argc, char *argv[])
 	{
 		error = ft_calloc(1, sizeof(t_error));
 		chain = lexer(argv[1]);
+        print_token_chain(chain, ft_chainlen(chain));
 		pipeline = ft_parser(&chain, error);
 	}
 	return (0);

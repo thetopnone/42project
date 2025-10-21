@@ -95,18 +95,56 @@ static void	ft_squote_scope(char const **s)
 		(*s)++;
 }
 
+//This function handles the quotes in write word
+static int  ft_handle_quotes(char **s)
+{
+	if (!s || !*s)
+		return (-1);
+	if (**s == '"')
+		ft_dquote_scope(s);
+	else if (**s == '\'')
+		ft_squote_scope(s);
+	return (0);
+}
+
+//This function handles the redirections in write word
+static int	ft_handle_redir(char **s)
+{
+	if (!s || !*s)
+		return (-1);
+	if (**s == '>')
+	{
+		while (**s == '>')
+			(*s)++;
+	}
+	else if (**s == '<')
+	{
+		while (**s == '<')
+			(*s)++;
+	}
+	return (0);
+}
+
+//Added redirection case where it will always treat redirections
+//and the target as different tokens
+//Also fixed a small bug for starting or trailing spaces
 static char	*ft_write_word(char const **s, char c)
 {
 	char const	*start;
 	char		*word;
 
+	while (**s == c)
+		(*s)++;
 	start = *s;
 	while (**s)
 	{
-		if (**s == '"')
-			ft_dquote_scope(s);
-		else if (**s == '\'')
-			ft_squote_scope(s);
+		if (**s == '"' || **s == '\'')
+			ft_handle_quotes(s);
+		else if (**s == '>' || **s == '<')
+		{
+			ft_handle_redir(s);
+			break;
+		}
 		else if (**s == c)
 			break ;
 		(*s)++;

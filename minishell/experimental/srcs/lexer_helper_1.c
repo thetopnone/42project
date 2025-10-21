@@ -70,6 +70,9 @@ t_quote_type	ft_set_qtype(char *str)
 }
 
 //This function sets correct token type of the token
+//what about this input: >>file >file ?
+//This will return a T_REDIR and a whole token?
+// we want to split the >>file to ">>" and "file"
 t_token_type	ft_set_token_type(char *string)
 {
 	if (!string)

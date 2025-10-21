@@ -13,20 +13,26 @@
 #include "../minishell.h"
 
 //A functon that returns the redirection type (checking +1 len in case of >>>)
+//This doesnt work in any case, all input will be assigned as valid redirection
+//Can I have and empty redirection filename?
+// >>>asd >> asgfas >>asfdahsd >>
+//FIXED!!!! Everything handled correctly
 static t_redir_type	ft_get_redir_type(char *string)
 {
-	if (ft_strncmp(string, ">", 2))
-		return (RE_OUT);
-	if (ft_strncmp(string, "<", 2))
-		return (RE_IN);
-	if (ft_strncmp(string, ">>", 3))
+    if (!ft_strncmp(string, ">>", 3))
 		return (RE_APPEND);
-	if (ft_strncmp(string, "<<", 3))
+	if (!ft_strncmp(string, "<<", 3))
 		return (RE_HEREDOC);
+	if (!ft_strncmp(string, ">", 2))
+		return (RE_OUT);
+	if (!ft_strncmp(string, "<", 2))
+		return (RE_IN);
 	return (RE_NONE);
 }
 
 //A function that extracts the redirections from the cmd_chain
+//What about empty redirections or redirections that have the 
+//target in their token
 t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 {
 	t_redirect		*red_chain;
@@ -36,7 +42,7 @@ t_redirect	*ft_get_red_chain(t_token *cmd_chain, t_error *err)
 	if (!cmd_chain)
 		return (NULL);
 	cur = cmd_chain;
-	while (cur->type != T_END)
+	while (cur && cur->type != T_END)
 	{
 		if (cur->type == T_REDIR)
 		{
@@ -66,7 +72,7 @@ int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 	if (!(*cmd_chain))
 		return (err->purify_cmd_chain = 0);
 	target = cmd_chain;
-	while ((*target)->type != T_END)
+	while (*target && (*target)->type != T_END)
 	{
 		if ((*target)->type == T_REDIR)
 		{
@@ -75,8 +81,11 @@ int	ft_purify_cmd_chain(t_token **cmd_chain, t_error *err)
 			temp = (*target)->next->next;
 			ft_del_token(cmd_chain, (*target)->next, err);
 			ft_del_token(cmd_chain, *target, err);
+			*target = temp;
 		}
-		*target = temp;
+		else
+			*target = (*target)->next;
+		
 	}
 	return (err->purify_cmd_chain = 0);
 }
