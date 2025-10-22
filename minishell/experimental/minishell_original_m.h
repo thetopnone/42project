@@ -55,16 +55,6 @@ typedef enum s_token_type
 	T_END
 } t_token_type;
 
-//This is a "word calculation" struct used to pass the norminette in
-//ft_word_amount function -- WE NEED TO TALK ABOUT IT
-typedef struct s_wc
-{
-	size_t	words;
-	int	i_w;
-	int	i_s;
-	int	i_d;
-} t_wc;
-
 //Token structure which the lexer will give as output
 //We will work on a single linked list of tokens called CHAIN
 typedef struct s_token
@@ -121,8 +111,6 @@ typedef struct s_envar
 typedef struct s_shell
 {
 	char	*last_cmd;
-	char	**envp;
-	t_envar	*envc;
 	int		last_exit;
 } t_shell;
 
@@ -163,6 +151,21 @@ typedef struct s_error
 	int	envar_amount;
 	int	set_envp;
 } t_error;
+
+typedef struct s_write_word
+{
+	char	*start;
+	char	*word;
+	int	i;
+} t_write_word;
+
+typedef struct s_word_amount
+{
+        size_t  words;
+        int     in_word;
+        int     in_squote;
+        int     in_dquote;
+} t_word_amount;
 
 //-----------------------------------------------------------------------------
 //PARSER (1)
@@ -226,7 +229,7 @@ int				ft_del_pipeline(t_pipe **pipeline, t_error *err);
 //-----------------------------------------------------------------------------
 //CLEANER HELPER 1 (1)
 //-----------------------------------------------------------------------------
-void			ft_del_string(char *string);
+void			ft_del_string(char **string);
 //-----------------------------------------------------------------------------
 //ERROR CHECKER (2)
 //-----------------------------------------------------------------------------
@@ -256,17 +259,30 @@ t_token			*lexer(char *input);
 //-----------------------------------------------------------------------------
 bool			ft_squote_check(char **s);
 bool			ft_dquote_check(char **s);
-t_quote_type	fsqt(char *str);
-t_token_type	fstt(char *string);
+t_quote_type	ft_set_qtype(char *str);
+t_token_type	ft_set_token_type(char *string);
 void			ft_create_chain(t_token **chain, char **input_arr);
 //-----------------------------------------------------------------------------
 //LEXER HELPER 2 (5)
 //-----------------------------------------------------------------------------
-char			**ft_split_mini(char const *s, char c);
-int				ft_split_logic(char **str_arr, char const *s, char c);
-size_t			ft_word_amount(char const *s, char c);
-char			*ft_write_word(char const **s, char c);
-void			ft_freearr(char **arr, size_t index);
+char		**ft_split_mini(char const *s, char c);
+int			ft_split_logic(char **str_arr, char const *s, char c);
+char		*ft_write_word(char **s, char c);
+size_t		ft_word_amount(char const *s, char c, t_error *err);
+void		ft_freearr(char **arr, size_t index);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 3 (5)
+//-----------------------------------------------------------------------------
+void		ft_inquote(char c, int *s_quote, int *d_quote, char **s);
+void		ft_squote_scope(char const **s);
+void		ft_dquote_scope(char const **s);
+void		ft_handle_quotes(const char **s);
+void		ft_handle_redir(const char **s);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 4 (2)
+//-----------------------------------------------------------------------------
+void		ft_handle_quo_red_wa(char **s, t_word_amount *state);
+int			ft_handle_quo_red_ww(char **s, int *redir, int *i);
 //-----------------------------------------------------------------------------
 //DEBUGGER
 //-----------------------------------------------------------------------------

@@ -108,12 +108,13 @@ int	ft_del_cmd(t_cmd **command, t_error *err)
 			ft_del_string(ref[i]);
 			i++;
 		}
-		//free ((*command)->argv);
+		free (ref);
 	}
 	ft_del_redir_chain(&((*command)->red_chain), err);
 	ft_del_token_chain(&((*command)->cmd_chain), err);
 	if (err->del_token_chain == 1 || err->del_redir_chain == 1)
 		return (err->del_cmd = 1);
+	free (*command);
 	free (command);
 	return (err->del_cmd = 0);
 }
@@ -135,7 +136,6 @@ int	ft_del_pipeline(t_pipe **pipeline, t_error *err)
 		temp = (*ref)->next;
 		if ((*ref)->command)
 			ft_del_cmd(&((*ref)->command), err);
-		//free(*ref);
 		*ref = temp;
 	}
 	free(*pipeline);

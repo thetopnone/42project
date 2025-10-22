@@ -53,6 +53,46 @@ size_t	ft_envar_amount(t_envar *envc, t_error *err)
 	return (res);
 }
 
+char	*ft_get_envp_key(char *envp, t_error *err)
+{
+	char	*key;
+	char	*ref;
+	size_t	*key_len;
+
+	if (!envp)
+	{
+		err->get_envp_key = 1;
+		return (1);
+	}
+	key_len = 0;
+	ref = envp;
+	while (*ref != '=')
+		ref++;
+	key_len = envp - ref; 
+	key = ft_calloc(key_len + 1, sizeof(char));
+	ft_strlcpy(key_len + 1)
+}
+
+//This function takes the third argument of the main function and turns it
+//into an envc chain
+t_envar	*ft_set_envc(char **envp, t_error *err)
+{
+	t_envar	*envc;
+	int		i;
+
+	if (!envp)
+	{
+		err->set_envc = 1;
+		return (NULL);
+	}
+	i = 0;
+	envc = NULL;
+	while (envp[i])
+	{
+
+	}
+}
+
 //We need a function that returns the envp array with all available envar
 char	**ft_set_envp(t_envar *envc, t_error *err)
 {

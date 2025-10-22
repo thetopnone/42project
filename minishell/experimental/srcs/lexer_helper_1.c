@@ -77,7 +77,7 @@ t_token_type	ft_set_token_type(char *string)
 {
 	if (!string)
 		return (T_END);
-	else if (!ft_strncmp(string, ">" , 1))
+	else if (!ft_strncmp(string, ">", 1))
 		return (T_REDIR);
 	else if (!ft_strncmp(string, "<", 1))
 		return (T_REDIR);
@@ -97,10 +97,10 @@ void	ft_create_chain(t_token **chain, char **input_arr)
 	i = 0;
 	while (input_arr[i])
 	{
-		//printf("\nInput array[%d]: %s\n", i,input_arr[i]);
-		ft_add_token(chain, ft_new_token(ft_set_token_type(input_arr[i]), input_arr[i], ft_set_qtype(input_arr[i])));
-		ft_del_string(input_arr[i]);
+		ft_add_token(chain, ft_new_token(ft_set_token_type(input_arr[i]),
+				input_arr[i], ft_set_qtype(input_arr[i])));
 		i++;
 	}
-	ft_add_token(chain, ft_new_token(ft_set_token_type(NULL), "", ft_set_qtype("Q_NONE")));
+	ft_add_token(chain, ft_new_token(ft_set_token_type(NULL),
+			"", ft_set_qtype("Q_NONE")));
 }

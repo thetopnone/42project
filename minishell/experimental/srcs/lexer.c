@@ -19,7 +19,7 @@ t_token	*lexer(char *input)
 
 	chain = NULL;
 	ft_create_chain(&chain, ft_split_mini(input,' '));
-	//print_token_chain(chain, ft_chainlen(chain));
+	print_token_chain(chain, ft_chainlen(chain));
 	return (chain);
 }
 /*
