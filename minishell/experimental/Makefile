@@ -11,8 +11,8 @@ srcs/envar_helper_2.c srcs/error_check.c srcs/expander.c \
 srcs/expander_helper_1.c srcs/expander_helper_2.c srcs/expander_helper_3.c \
 srcs/parser.c srcs/parser_helper_1.c srcs/parser_helper_2.c \
 srcs/redirection_helper.c srcs/tokens_helper.c srcs/main.c srcs/debugger.c \
-srcs/lexer_helper_2.c srcs/lexer.c srcs/lexer_helper_1.c srcs/lexer_helper_3.c\
-srcs/lexer_helper_4.c
+srcs/lexer_helper_2.c srcs/lexer.c srcs/lexer_helper_1.c srcs/lexer_helper_3.c \
+srcs/lexer_helper_4.c srcs/envar.c
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 
 all: $(NAME)

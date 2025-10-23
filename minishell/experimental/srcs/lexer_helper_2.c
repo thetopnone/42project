@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static void	ft_freearr(char **arr, size_t index)
+void	ft_freearr(char **arr, size_t index)
 {
 	while (index > 0)
 	{
@@ -22,7 +22,7 @@ static void	ft_freearr(char **arr, size_t index)
 	free(arr);
 }
 
-static size_t	ft_word_amount(char const *s, char c, t_error *err)
+size_t	ft_word_amount(char *s, char c, t_error *err)
 {
 	t_word_amount	state;
 
@@ -30,7 +30,7 @@ static size_t	ft_word_amount(char const *s, char c, t_error *err)
 	while (*s)
 	{
 		if (*s == '"' || *s == '\'' || *s == '>' || *s == '<')
-			ft_handle_quo_red_wa(*s, &state);
+			ft_handle_quo_red_wa(&s, &state);
 		else if (*s == c && !(state.in_squote || state.in_dquote))
 		{
 			state.in_word = 0;
@@ -53,7 +53,7 @@ static size_t	ft_word_amount(char const *s, char c, t_error *err)
 //Added redirection case where it will always treat redirections
 //and the target as different tokens
 //Also fixed a small bug for starting or trailing spaces (check)
-static char	*ft_write_word(char **s, char c)
+char	*ft_write_word(char **s, char c)
 {
 	t_write_word	init;
 	static int		redir;
@@ -80,7 +80,7 @@ static char	*ft_write_word(char **s, char c)
 }
 
 //(Check)
-static int	ft_split_logic(char **str_arr, char const *s, char c)
+int	ft_split_logic(char **str_arr, char *s, char c)
 {
 	size_t		index;
 	int			quote;
@@ -106,7 +106,7 @@ static int	ft_split_logic(char **str_arr, char const *s, char c)
 	return (1);
 }
 
-char	**ft_split_mini(char const *s, char c)
+char	**ft_split_mini(char *s, char c, t_error *err)
 {
 	char		**str_arr;
 
@@ -116,7 +116,7 @@ char	**ft_split_mini(char const *s, char c)
 		str_arr[0] = NULL;
 		return (str_arr);
 	}
-	str_arr = malloc((ft_word_amount(s, c) + 1) * sizeof(char *));
+	str_arr = malloc((ft_word_amount(s, c, err) + 1) * sizeof(char *));
 	if (!str_arr)
 		return (NULL);
 	if (!ft_split_logic(str_arr, s, c))

@@ -23,7 +23,9 @@ int	main(int argc, char *argv[], char **envp)
 	{
 		error = ft_calloc(1, sizeof(t_error));
 		shell = ft_calloc(1, sizeof(t_shell));
-		chain = lexer(argv[1]);
+		shell->envc = ft_set_envc(envp, error);
+		shell->envp = ft_set_envp(shell->envc, error);
+		chain = lexer(argv[1], error);
 		pipeline = ft_parser(&chain, error);
 		ft_expander(pipeline, shell, error);
 		print_pipeline(pipeline);

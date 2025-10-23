@@ -55,16 +55,6 @@ typedef enum s_token_type
 	T_END
 } t_token_type;
 
-//This is a "word calculation" struct used to pass the norminette in
-//ft_word_amount function -- WE NEED TO TALK ABOUT IT
-typedef struct s_wc
-{
-	size_t	words;
-	int	i_w;
-	int	i_s;
-	int	i_d;
-} t_wc;
-
 //Token structure which the lexer will give as output
 //We will work on a single linked list of tokens called CHAIN
 typedef struct s_token
@@ -121,8 +111,8 @@ typedef struct s_envar
 typedef struct s_shell
 {
 	char	*last_cmd;
-	char	**envp;
 	t_envar	*envc;
+	char	**envp;
 	int		last_exit;
 } t_shell;
 
@@ -162,12 +152,27 @@ typedef struct s_error
 	int	valid_env;
 	int	envar_amount;
 	int	set_envp;
+	int	get_envp_key;
+	int	get_envp_value;
+	int	set_envc;
+	int	word_amount;
 } t_error;
 
-//-----------------------------------------------------------------------------
-//PARSER (1)
-//-----------------------------------------------------------------------------
-t_pipe			*ft_parser(t_token **chain, t_error *err);
+typedef struct s_write_word
+{
+	char	*start;
+	char	*word;
+	int	i;
+} t_write_word;
+
+typedef struct s_word_amount
+{
+        size_t  words;
+        int     in_word;
+        int     in_squote;
+        int     in_dquote;
+} t_word_amount;
+
 //-----------------------------------------------------------------------------
 //PARSER HELPER 1 (4)
 //-----------------------------------------------------------------------------
@@ -183,9 +188,9 @@ int				ft_purify_cmd_chain(t_token **cmd_chain, t_error *err);
 t_token			*ft_get_cmd_chain(t_token **chain, t_error *err);
 int				ft_check_token_chain(t_token *chain, t_error *err);
 //-----------------------------------------------------------------------------
-//EXPANDER (4)
+//PARSER (1)
 //-----------------------------------------------------------------------------
-int				ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
+t_pipe			*ft_parser(t_token **chain, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 1 (5)
 //-----------------------------------------------------------------------------
@@ -202,6 +207,10 @@ int         	ft_rmquotes(char **s, t_error *err);
 int				ft_isenvchar(int c);
 int				ft_set_cmd_argv(t_pipe *pipe, t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
+//EXPANDER (4)
+//-----------------------------------------------------------------------------
+int				ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
+//-----------------------------------------------------------------------------
 //REDIRECTION HELPER (4)
 //-----------------------------------------------------------------------------
 t_redirect		*ft_new_redir(t_redir_type type, char *target, t_quote_type q_type);
@@ -216,6 +225,10 @@ t_token			*ft_get_last_token(t_token *chain);
 void			ft_add_token(t_token **chain, t_token *token);
 size_t			ft_chainlen(t_token *chain);
 //-----------------------------------------------------------------------------
+//CLEANER HELPER 1 (1)
+//-----------------------------------------------------------------------------
+void			ft_del_string(char **string);
+//-----------------------------------------------------------------------------
 //CLEANER (5)
 //-----------------------------------------------------------------------------
 int				ft_del_token(t_token **chain, t_token *token, t_error *err);
@@ -223,10 +236,6 @@ int				ft_del_token_chain(t_token **chain, t_error *err);
 int				ft_del_redir_chain(t_redirect **red_chain, t_error *err);
 int				ft_del_cmd(t_cmd **command, t_error *err);
 int				ft_del_pipeline(t_pipe **pipeline, t_error *err);
-//-----------------------------------------------------------------------------
-//CLEANER HELPER 1 (1)
-//-----------------------------------------------------------------------------
-void			ft_del_string(char *string);
 //-----------------------------------------------------------------------------
 //ERROR CHECKER (2)
 //-----------------------------------------------------------------------------
@@ -242,31 +251,50 @@ int				ft_add_envar(t_envar **envc, t_envar *var, t_error *err);
 int				ft_del_envar(t_envar **envc, t_envar *var, t_error *err);
 t_envar			*ft_get_envar(t_envar *envc, char *key, t_error *err);
 //-----------------------------------------------------------------------------
-//ENVAR HELPER 2 (3)
+//ENVAR HELPER 2 (4)
 //-----------------------------------------------------------------------------
 int				ft_valid_env(char *key, t_error *err);
 size_t			ft_envar_amount(t_envar *envc, t_error *err);
+char			*ft_get_envp_key(char *envp, t_error *err);
+char			*ft_get_envp_value(char *envp, t_error *err);
+//-----------------------------------------------------------------------------
+//ENVAR (2)
+//-----------------------------------------------------------------------------
+t_envar			*ft_set_envc(char **envp, t_error *err);
 char			**ft_set_envp(t_envar *envc, t_error *err);
-//-----------------------------------------------------------------------------
-//LEXER (1)
-//-----------------------------------------------------------------------------
-t_token			*lexer(char *input);
 //-----------------------------------------------------------------------------
 //LEXER HELPER 1 (5)
 //-----------------------------------------------------------------------------
 bool			ft_squote_check(char **s);
 bool			ft_dquote_check(char **s);
-t_quote_type	fsqt(char *str);
-t_token_type	fstt(char *string);
+t_quote_type	ft_set_qtype(char *str);
+t_token_type	ft_set_token_type(char *string);
 void			ft_create_chain(t_token **chain, char **input_arr);
 //-----------------------------------------------------------------------------
 //LEXER HELPER 2 (5)
 //-----------------------------------------------------------------------------
-char			**ft_split_mini(char const *s, char c);
-int				ft_split_logic(char **str_arr, char const *s, char c);
-size_t			ft_word_amount(char const *s, char c);
-char			*ft_write_word(char const **s, char c);
-void			ft_freearr(char **arr, size_t index);
+char		**ft_split_mini(char *s, char c, t_error *err);
+int			ft_split_logic(char **str_arr, char *s, char c);
+char		*ft_write_word(char **s, char c);
+size_t		ft_word_amount(char *s, char c, t_error *err);
+void		ft_freearr(char **arr, size_t index);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 3 (5)
+//-----------------------------------------------------------------------------
+void		ft_inquote(char c, int *s_quote, int *d_quote);
+void		ft_squote_scope(char **s);
+void		ft_dquote_scope(char **s);
+void		ft_handle_quotes(char **s);
+void		ft_handle_redir(char **s);
+//-----------------------------------------------------------------------------
+//LEXER HELPER 4 (2)
+//-----------------------------------------------------------------------------
+void		ft_handle_quo_red_wa(char **s, t_word_amount *state);
+int			ft_handle_quo_red_ww(char **s, int *redir, int *i);
+//-----------------------------------------------------------------------------
+//LEXER (1)
+//-----------------------------------------------------------------------------
+t_token			*lexer(char *input, t_error *err);
 //-----------------------------------------------------------------------------
 //DEBUGGER
 //-----------------------------------------------------------------------------

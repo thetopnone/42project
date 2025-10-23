@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static void	ft_inquote(char c, int *s_quote, int *d_quote, char **s)
+void	ft_inquote(char c, int *s_quote, int *d_quote)
 {
 	if (c == '\'')
 	{
@@ -30,14 +30,14 @@ static void	ft_inquote(char c, int *s_quote, int *d_quote, char **s)
 	}
 }
 
-static void	ft_dquote_scope(char const **s)
+void	ft_dquote_scope(char const **s)
 {
 	(*s)++;
 	while (**s && **s != '"')
 		(*s)++;
 }
 
-static void	ft_squote_scope(char const **s)
+void	ft_squote_scope(char const **s)
 {
 	(*s)++;
 	while (**s && **s != '\'')
@@ -45,7 +45,7 @@ static void	ft_squote_scope(char const **s)
 }
 
 //This function handles the quotes in write word
-static void	ft_handle_quotes(const char **s)
+void	ft_handle_quotes(const char **s)
 {
 	if (!s || !*s)
 		return ;
@@ -56,10 +56,10 @@ static void	ft_handle_quotes(const char **s)
 }
 
 //This function handles the redirections in write word
-static void	ft_handle_redir(const char **s)
+void	ft_handle_redir(const char **s)
 {
 	if (!s || !*s)
-		return (-1);
+		return ;
 	if (**s == '>')
 	{
 		while (**s == '>')

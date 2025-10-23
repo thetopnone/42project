@@ -128,7 +128,6 @@ int	ft_check_token_chain(t_token *chain, t_error *err)
 	if (!chain || chain->type == T_PIPE_OP)
 		return (err->check_token_chain = 1);
 	cur = chain;
-
 	while (cur != NULL)
 	{
 		if (cur->type == T_NONE)

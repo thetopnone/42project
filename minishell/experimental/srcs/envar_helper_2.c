@@ -53,72 +53,51 @@ size_t	ft_envar_amount(t_envar *envc, t_error *err)
 	return (res);
 }
 
+//A function that exctracts the "key" from the envar passed
+//Checked with board. Should work as intended
 char	*ft_get_envp_key(char *envp, t_error *err)
 {
 	char	*key;
 	char	*ref;
-	size_t	*key_len;
+	size_t	key_len;
 
 	if (!envp)
 	{
 		err->get_envp_key = 1;
-		return (1);
+		return (NULL);
 	}
 	key_len = 0;
 	ref = envp;
-	while (*ref != '=')
+	while (*ref && *ref != '=')
 		ref++;
 	key_len = envp - ref; 
 	key = ft_calloc(key_len + 1, sizeof(char));
-	ft_strlcpy(key_len + 1)
+	ft_strlcpy(key, envp, key_len + 1);
+	err->get_envp_key = 0;
+	return(key);
 }
 
-//This function takes the third argument of the main function and turns it
-//into an envc chain
-t_envar	*ft_set_envc(char **envp, t_error *err)
+//A function that extracts the "value" of the envp passed to it
+char	*ft_get_envp_value(char *envp, t_error *err)
 {
-	t_envar	*envc;
-	int		i;
+	char	*value;
+	char	*ref;
+	size_t	value_len;
 
 	if (!envp)
 	{
-		err->set_envc = 1;
+		err->get_envp_value = 1;
 		return (NULL);
 	}
-	i = 0;
-	envc = NULL;
-	while (envp[i])
-	{
-
-	}
-}
-
-//We need a function that returns the envp array with all available envar
-char	**ft_set_envp(t_envar *envc, t_error *err)
-{
-	char	**envp;
-	char	*key;
-	char	*value;
-
-	if (!envc)
-	{
-		err->set_envp = 1;
-		return (NULL);
-	}
-	envp = ft_calloc(ft_envar_amount(envc, err), sizeof(char *));
-	key = NULL;
 	value = NULL;
-	while(envc)
-	{
-		key = ft_strjoin(ft_strdup(envc->key), "=");
-		value = ft_strdup(envc->value);
-		*envp = ft_strjoin(key, value);
-		free(key);
-		free(value);
-		envp++;
-		envc = envc->next;
-	}
-	*envp = NULL;
-	err->set_envp = 0;
-	return (envp);
+	ref = envp;
+	value_len = 0;
+	while (*ref && *ref != '=')
+		ref++;
+	ref++;
+	value_len = ft_strlen(ref);
+	value = ft_calloc(value_len + 1, sizeof(char));
+	ft_strlcpy(value, ref, value_len + 1);
+	err->get_envp_value = 0;
+	return (ref);
 }

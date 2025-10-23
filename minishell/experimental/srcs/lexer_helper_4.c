@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-static void	ft_handle_quo_red_wa(char **s, t_word_amount *state)
+void	ft_handle_quo_red_wa(char **s, t_word_amount *state)
 {
 	if (!s || *s)
 		return ;
 	if (**s == '"' || **s == '\'')
-		ft_inquote(**s, &state->in_squote, &state->in_dquote, s);
+		ft_inquote(**s, &state->in_squote, &state->in_dquote);
 	else
 	{
 		state->words++;
@@ -26,7 +26,7 @@ static void	ft_handle_quo_red_wa(char **s, t_word_amount *state)
 	}
 }
 
-static int	ft_handle_quo_red_ww(char **s, int *redir, int *i)
+int	ft_handle_quo_red_ww(char **s, int *redir, int *i)
 {
 	if (**s == '"' || **s == '\'')
 		ft_handle_quotes(s);
