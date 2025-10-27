@@ -70,7 +70,7 @@ char	*ft_get_envp_key(char *envp, t_error *err)
 	ref = envp;
 	while (*ref && *ref != '=')
 		ref++;
-	key_len = envp - ref; 
+	key_len = ref - envp; 
 	key = ft_calloc(key_len + 1, sizeof(char));
 	ft_strlcpy(key, envp, key_len + 1);
 	err->get_envp_key = 0;

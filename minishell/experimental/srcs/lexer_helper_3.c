@@ -30,14 +30,14 @@ void	ft_inquote(char c, int *s_quote, int *d_quote)
 	}
 }
 
-void	ft_dquote_scope(char const **s)
+void	ft_dquote_scope(char **s)
 {
 	(*s)++;
 	while (**s && **s != '"')
 		(*s)++;
 }
 
-void	ft_squote_scope(char const **s)
+void	ft_squote_scope(char **s)
 {
 	(*s)++;
 	while (**s && **s != '\'')
@@ -45,18 +45,20 @@ void	ft_squote_scope(char const **s)
 }
 
 //This function handles the quotes in write word
-void	ft_handle_quotes(const char **s)
+void	ft_handle_quotes(char **s)
 {
 	if (!s || !*s)
 		return ;
 	if (**s == '"')
+	{
 		ft_dquote_scope(s);
+	}
 	else if (**s == '\'')
 		ft_squote_scope(s);
 }
 
 //This function handles the redirections in write word
-void	ft_handle_redir(const char **s)
+void	ft_handle_redir(char **s)
 {
 	if (!s || !*s)
 		return ;

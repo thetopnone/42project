@@ -29,9 +29,13 @@ void	ft_handle_quo_red_wa(char **s, t_word_amount *state)
 int	ft_handle_quo_red_ww(char **s, int *redir, int *i)
 {
 	if (**s == '"' || **s == '\'')
+	{
+		ft_printf("HERE\n");
 		ft_handle_quotes(s);
+	}
 	else
 	{
+		ft_printf("HERE\n");
 		if (!*redir && !*i)
 		{
 			ft_handle_redir(s);
@@ -41,5 +45,6 @@ int	ft_handle_quo_red_ww(char **s, int *redir, int *i)
 			*redir = 0;
 		return (1);
 	}
+	ft_printf("HERE\n");
 	return (0);
 }
