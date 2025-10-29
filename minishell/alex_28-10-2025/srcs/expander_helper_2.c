@@ -17,7 +17,7 @@ static t_quote_type	ft_quote_type(int c)
 {
 	if (c == '\'')
 		return (Q_SINGLE);
-	if (c == '\"')
+	if (c == '"')
 		return (Q_DOUBLE);
 	return(Q_NONE);
 }
@@ -25,7 +25,7 @@ static t_quote_type	ft_quote_type(int c)
 //A function that returns the next quote of the specified type
 static char	*ft_get_next_quote(char *s, t_quote_type type)
 {
-	if (!s || type == T_NONE)
+	if (!s || type == Q_NONE)
 		return (NULL);
 	while (*s && (ft_quote_type(*s) != type))
 		s++;
@@ -39,8 +39,10 @@ static char	*ft_get_first_quote(char *s)
 {
 	if (!s)
 		return (NULL);
-	while (*s && (*s != '\'' || *s != '\"'))
+	while (*s && *s != '\'' && *s != '"')
 		s++;
+	if (!*s)
+		return (NULL);
 	return (s);
 }
 
@@ -53,16 +55,22 @@ static char	*ft_get_first_quote(char *s)
 char	*ft_rmchar(char **s, char *c)
 {
 	char	*ref;
+	char	*s1;
+	char	*s2;
 	char	*new;
 	size_t	index;
 
 	if (!s || !*s || !c)
 		return (NULL);
 	ref = *s;
-	index = c - ref;
-	new = ft_strjoin(ft_substr(ref, 0 , index), ft_substr(ref, index + 1, ft_strlen(c)));
+	index = c - *s;
+	s1 = ft_substr(ref, 0, index);
+	s2 = ft_substr(ref, index + 1, ft_strlen(c));
+	new = ft_strjoin(s1, s2);
 	free(*s);
 	*s = new;
+	free(s1);
+	free(s2);
 	return (*s + index);
 }
 
@@ -71,9 +79,10 @@ char	*ft_rmchar(char **s, char *c)
 //We need to pass the address of the target
 int	ft_rmquotes(char **s, t_error *err)
 {
-	char	*ref;
-	char	*o_quote;
-	char	*c_quote;
+	char			*ref;
+	char			*o_quote;
+	t_quote_type	q_to_remove;
+	char			*c_quote;
 
 	if (!s || !*s)
 		return (err->rmquotes = 1);
@@ -81,8 +90,11 @@ int	ft_rmquotes(char **s, t_error *err)
 	while (*ref)
 	{
 		o_quote = ft_get_first_quote(ref);
-		c_quote = ft_get_next_quote(ref, ft_quote_type(*o_quote));
+		if (!o_quote)
+			return (err->rmquotes = 0);
+		q_to_remove = ft_quote_type(*o_quote);
 		ref = ft_rmchar(s, o_quote);
+		c_quote = ft_get_next_quote(ref, q_to_remove);
 		ref = ft_rmchar(s, c_quote);
 	}
 	return (err->rmquotes = 0);

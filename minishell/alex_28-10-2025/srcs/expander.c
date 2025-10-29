@@ -15,13 +15,10 @@
 //A function that expands all $ in  a given string
 static int	ft_expand_str(char **str, t_shell *shell, t_error *err)
 {
-	char	*ref;
-
 	if (!str)
 		return(err->expand_str = 1);
-	ref = *str;
-	while (ft_get_dollar(ref, err) != NULL)
-		ft_expand_dollar(ft_get_dollar(ref, err), shell, err);
+	while (ft_get_dollar(*str, err) != NULL)
+		ft_expand_dollar(str, ft_get_dollar(*str, err), shell, err);
 	return (err->expand_str = 0);
 }
 
@@ -46,6 +43,7 @@ static int	ft_expand_cmd(t_token *cmd_chain, t_shell *shell, t_error *err)
 	while (cmd_chain)
 	{
 		ft_expand_str(&(cmd_chain->string), shell, err);
+		ft_rmquotes(&(cmd_chain->string), err);
 		cmd_chain = cmd_chain->next;
 	}
 	return (err->expand_cmd = 0);

@@ -105,5 +105,5 @@ t_envar	*ft_get_envar(t_envar *envc, char *key, t_error *err)
 	err->get_envar = 0;
 	if (!envc)
 		return (NULL);
-	return(envc);
+	return (envc);
 }

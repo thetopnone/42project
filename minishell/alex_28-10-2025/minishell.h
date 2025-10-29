@@ -55,6 +55,20 @@ typedef enum s_token_type
 	T_END
 } t_token_type;
 
+//Enum with all the built in types. We will check the argv passed to execution
+//and see if we have a matching built-in
+typedef enum s_built_in
+{
+	B_NONE,
+	B_CD,
+	B_ECHO,
+	B_ENV,
+	B_EXIT,
+	B_EXPORT,
+	B_PWD,
+	B_UNSET
+} t_built_in;
+
 //Token structure which the lexer will give as output
 //We will work on a single linked list of tokens called CHAIN
 typedef struct s_token
@@ -82,9 +96,9 @@ typedef struct s_redirect
 //will use them to create the argv array to pass to the executor
 typedef struct s_cmd
 {
-	char		**argv;
-	t_token		*cmd_chain;
-	t_redirect	*red_chain;
+	char			**argv;
+	t_token			*cmd_chain;
+	t_redirect		*red_chain;
 } t_cmd;
 
 //Pipe structure that holds the command on the current pipe and
@@ -143,17 +157,19 @@ typedef struct s_error
 	int	envar_amount;
 	int	set_envp;
 	int	word_amount;
+	int	echo;
+	int	check_for_built_in;
 } t_error;
 
 //This structure holds information about the shell state, like the exit status
 //of the last executed command
 typedef struct s_shell
 {
-	char	*last_cmd;
-	char	*input;
-	t_error	*err;
-	t_token	*chain;
-	int		last_exit;
+	char		*last_cmd;
+	char		*input;
+	t_error		*err;
+	t_token		*chain;
+	int			last_exit;
 } t_shell;
 
 //-----------------------------------------------------------------------------
@@ -182,7 +198,8 @@ int				ft_expander(t_pipe *pipeline, t_shell *shell, t_error *err);
 //EXPANDER HELPER 1 (5)
 //-----------------------------------------------------------------------------
 char			*ft_get_dollar(char *str, t_error *err);
-int				ft_expand_dollar(char *dollar, t_shell *shell, t_error *err);
+int				ft_expand_dollar(char **str, char *dollar,
+					t_shell *shell, t_error *err);
 //-----------------------------------------------------------------------------
 //EXPANDER HELPER 2 (5)
 //-----------------------------------------------------------------------------
