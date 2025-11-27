@@ -30,7 +30,7 @@ void	ft_clear_input(char *str)
 		str[end] = ' ';
 }
 
-int	ft_balance(char *str)
+int	ft_balance(char *str, int *rm_right)
 {
 	int	balance;
 
@@ -41,8 +41,13 @@ int	ft_balance(char *str)
 	{
 		if (*str == '(')
 			balance++;
-		else if (*str == ')')
+		else if (*str == ')' && balance > 0)
 			balance--;
+		else if (balance == 0)
+		{
+			if (*str == ')')
+				(*rm_right)++;
+		}
 		str++;
 	}
 	return (balance);
@@ -107,13 +112,11 @@ int	ft_rip(char *str)
 	int		rm_left;
 	int		rm_right;
 
-	balance = ft_balance(str);
-	printf("BALANCE: %d\n", balance);
 	rm_left = 0;
 	rm_right = 0;
-	if (balance < 0)
-		rm_right = (-1) * balance;
-	else
+	balance = ft_balance(str, &rm_right);
+	printf("BALANCE: %d\n", balance);
+	if (balance > 0)
 		rm_left = balance;
 	printf("LEFT %d\n RIGHT %d\n",rm_left, rm_right);
 	ft_recursion(str, rm_left, rm_right, 0);
@@ -125,7 +128,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (-1);
 	ft_clear_input(argv[1]);
-	puts(argv[1]);
+	//puts(argv[1]);
 	printf("%d\n", ft_valid_balance(argv[1]));
 	if (ft_valid_balance(argv[1]) == 0)
 	{
