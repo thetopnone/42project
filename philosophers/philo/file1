@@ -1,8 +1,32 @@
-[487] Philo 1 is thinking
-[490] Philo 1 grabbed a fork
-[490] Philo 1 grabbed a fork
-[490] Philo 1 is eating
-[492] Philo 2 is thinking
-[493] Philo 3 is thinking
-[493] Philo 3 grabbed a fork
-Philo 1 has died
+[1764293023852] Philo 1 is thinking
+[1764293023852] Philo 1 grabbed a fork
+[1764293023852] Philo 1 grabbed a fork
+[1764293023852] Philo 1 is eating
+[1764293023852] Philo 2 is thinking
+[1764293023852] Philo 3 is thinking
+[1764293023852] Philo 3 grabbed a fork
+[1764293023958] Philo 1 is sleeping
+[1764293023958] Philo 2 grabbed a fork
+[1764293023958] Philo 3 grabbed a fork
+[1764293023958] Philo 3 is eating
+[1764293024064] Philo 3 is sleeping
+[1764293024064] Philo 2 grabbed a fork
+[1764293024064] Philo 2 is eating
+[1764293024066] Philo 1 is thinking
+[1764293024164] Philo 3 is thinking
+[1764293024164] Philo 2 is sleeping
+[1764293024165] Philo 3 grabbed a fork
+[1764293024165] Philo 3 grabbed a fork
+[1764293024165] Philo 3 is eating
+[1764293024165] Philo 1 grabbed a fork
+[1764293024265] Philo 2 is thinking
+[1764293024266] Philo 3 is sleeping
+[1764293024266] Philo 1 grabbed a fork
+[1764293024266] Philo 1 is eating
+[1764293024367] Philo 3 is thinking
+[1764293024367] Philo 3 grabbed a fork
+[1764293024374] Philo 1 is sleeping
+[1764293024375] Philo 2 grabbed a fork
+[1764293024375] Philo 3 grabbed a fork
+[1764293024375] Philo 3 is eating
+[1764293024474] Philo 2 has died

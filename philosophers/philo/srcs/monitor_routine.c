@@ -30,7 +30,7 @@ int	ft_check_philo_death(t_monitor *monitor)
 		if (!philo->is_eating && ft_time_in_ms(time) - philo->last_meal >= monitor->time_to_die)
 		{
 			pthread_mutex_lock(philo->print);
-			printf("Philo %d has died\n", philo->id);
+			printf("[%ld] Philo %d has died\n", ft_time_in_ms(time), philo->id);
 			pthread_mutex_unlock(philo->print);
 			return (1);
 		}
@@ -54,6 +54,6 @@ void	*ft_monitor_routine(void *arg)
 	{
 		if (ft_check_philo_death(monitor) == 1)
 			return (NULL);
-		ft_usleep(1);
+		usleep(50);
 	}
 }

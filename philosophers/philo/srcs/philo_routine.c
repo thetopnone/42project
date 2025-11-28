@@ -46,7 +46,7 @@ void	ft_philo_sleeping(t_philos *philo)
 	pthread_mutex_lock(philo->print);
 	printf("[%ld] Philo %d is sleeping\n", ft_time_in_ms(time), philo->id);
 	pthread_mutex_unlock(philo->print);
-	ft_usleep(philo->time_to_sleep);
+	usleep(1000 * philo->time_to_sleep);
 }
 
 //Remember to make philo 1 grab the fork in front of him first
@@ -68,6 +68,7 @@ void	*ft_philo_routine(void *arg)
 	struct timeval	time;
 
 	philo = (t_philos *)arg;
+    usleep(200 * ((long)(1 / philo->id)));
 	gettimeofday(&time, NULL);
 	philo->last_meal = ft_time_in_ms(time);
 	while (1)

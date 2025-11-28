@@ -33,7 +33,7 @@ t_monitor	*ft_allocate_monitor(t_philos *philos, int *input)
 
 int	ft_init_monitor(t_monitor *monitor, pthread_t *monitor_thread)
 {
-	ft_usleep(50);
+	usleep(10);
 	pthread_create(monitor_thread, NULL, ft_monitor_routine, monitor);
 	return (0);
 }

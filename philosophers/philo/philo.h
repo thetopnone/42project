@@ -64,7 +64,7 @@ void		*ft_philo_routine(void *arg);
 //-----------------------------------------------------------------------------
 // PHILO ROUTINE HELPER (4)
 //-----------------------------------------------------------------------------
-void		ft_usleep(int ms);
+void		ft_usleep(long ms);
 void		ft_grab_front_fork(t_philos *philo);
 void		ft_grab_left_fork(t_philos *philo);
 void		ft_eat_and_leave_forks(t_philos *philo);
