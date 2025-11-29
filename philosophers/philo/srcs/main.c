@@ -31,12 +31,15 @@ int	main(int argc, char **argv)
 		return (-1);
 	ft_get_input(argv, input);
 	pthread_mutex_init(&print, NULL);
+	monitor = ft_allocate_monitor(input);
 	philos = ft_create_philos(input, &print);
-	//ft_print_philo_chain(philos, input[0]);
-	monitor = ft_allocate_monitor(philos, input);
-	ft_init_philos(philos, input[0]);
+	monitor->philos = philos;
+	ft_set_death_flag(monitor);
 	ft_init_monitor(monitor, &monitor_thread);
-	pthread_join(monitor_thread, NULL);
+	monitor->philo = ft_init_philos(philos, input[0]);
+	ft_thread_join(monitor ,monitor_thread, input[0]);
+	free(monitor->philo);
+	free(monitor);
 	ft_exit(&philos, &input);
 	return (0);
 }

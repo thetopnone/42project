@@ -12,6 +12,25 @@
 
 #include "../philo.h"
 
+void	ft_set_death_flag(t_monitor *monitor)
+{
+	t_philos	*philo;
+	int			philo_amount;
+	int			i;
+
+	philo = monitor->philos;
+	philo_amount = 1;
+	if (philo->prev)
+		philo_amount = philo->prev->id;
+	i = 0;
+	while (i < philo_amount)
+	{
+		philo->death_flag = &monitor->death_flag;
+		philo = philo->next;
+		i++;
+	}
+}
+
 t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *print)
 {
 	t_philos	*new_philo;
@@ -23,11 +42,13 @@ t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *print)
 		return (NULL);
 	new_philo->id = id;
 	new_philo->is_eating = 0;
+	new_philo->time_to_die = input[1];
 	new_philo->time_to_eat = input[2];
 	new_philo->time_to_sleep = input[3];
+	new_philo->death_flag = NULL;
 	new_philo->times_fed = 0;
 	new_philo->last_meal = 0;
-	new_philo->print = print;
+	new_philo->print = &(*print);
 	pthread_mutex_init(&new_philo->eating, NULL);
 	pthread_mutex_init(&new_philo->fork, NULL);
 	new_philo->prev = NULL;

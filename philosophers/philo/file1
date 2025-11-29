@@ -1,32 +1,62 @@
-[1764293023852] Philo 1 is thinking
-[1764293023852] Philo 1 grabbed a fork
-[1764293023852] Philo 1 grabbed a fork
-[1764293023852] Philo 1 is eating
-[1764293023852] Philo 2 is thinking
-[1764293023852] Philo 3 is thinking
-[1764293023852] Philo 3 grabbed a fork
-[1764293023958] Philo 1 is sleeping
-[1764293023958] Philo 2 grabbed a fork
-[1764293023958] Philo 3 grabbed a fork
-[1764293023958] Philo 3 is eating
-[1764293024064] Philo 3 is sleeping
-[1764293024064] Philo 2 grabbed a fork
-[1764293024064] Philo 2 is eating
-[1764293024066] Philo 1 is thinking
-[1764293024164] Philo 3 is thinking
-[1764293024164] Philo 2 is sleeping
-[1764293024165] Philo 3 grabbed a fork
-[1764293024165] Philo 3 grabbed a fork
-[1764293024165] Philo 3 is eating
-[1764293024165] Philo 1 grabbed a fork
-[1764293024265] Philo 2 is thinking
-[1764293024266] Philo 3 is sleeping
-[1764293024266] Philo 1 grabbed a fork
-[1764293024266] Philo 1 is eating
-[1764293024367] Philo 3 is thinking
-[1764293024367] Philo 3 grabbed a fork
-[1764293024374] Philo 1 is sleeping
-[1764293024375] Philo 2 grabbed a fork
-[1764293024375] Philo 3 grabbed a fork
-[1764293024375] Philo 3 is eating
-[1764293024474] Philo 2 has died
+1764422114355 2 is thinking
+1764422114355 2 has taken a fork
+1764422114355 2 has taken a fork
+1764422114355 2 is eating
+1764422114355 3 is thinking
+1764422114355 4 is thinking
+1764422114355 4 has taken a fork
+1764422114355 4 has taken a fork
+1764422114355 1 is thinking
+1764422114355 4 is eating
+1764422114555 4 is sleeping
+1764422114555 2 is sleeping
+1764422114555 1 has taken a fork
+1764422114555 1 has taken a fork
+1764422114555 1 is eating
+1764422114555 3 has taken a fork
+1764422114555 3 has taken a fork
+1764422114555 3 is eating
+1764422114655 4 is thinking
+1764422114655 2 is thinking
+1764422114755 3 is sleeping
+1764422114755 1 is sleeping
+1764422114755 4 has taken a fork
+1764422114755 4 has taken a fork
+1764422114755 4 is eating
+1764422114755 2 has taken a fork
+1764422114755 2 has taken a fork
+1764422114755 2 is eating
+1764422114855 3 is thinking
+1764422114855 1 is thinking
+1764422114955 4 is sleeping
+1764422114955 2 is sleeping
+1764422114955 3 has taken a fork
+1764422114955 3 has taken a fork
+1764422114955 3 is eating
+1764422114955 1 has taken a fork
+1764422114955 1 has taken a fork
+1764422114955 1 is eating
+1764422115055 4 is thinking
+1764422115055 2 is thinking
+1764422115155 3 is sleeping
+1764422115155 4 has taken a fork
+1764422115155 1 is sleeping
+1764422115155 4 has taken a fork
+1764422115155 4 is eating
+1764422115155 2 has taken a fork
+1764422115155 2 has taken a fork
+1764422115155 2 is eating
+1764422115255 1 is thinking
+1764422115255 3 is thinking
+1764422115355 4 is sleeping
+1764422115355 2 is sleeping
+1764422115355 3 has taken a fork
+1764422115355 3 has taken a fork
+1764422115355 3 is eating
+1764422115355 1 has taken a fork
+1764422115355 1 has taken a fork
+1764422115355 1 is eating
+1764422115455 4 is thinking
+1764422115455 2 is thinking
+1764422115555 3 is sleeping
+1764422115555 1 is sleeping
