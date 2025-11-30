@@ -31,7 +31,7 @@ void	ft_set_death_flag(t_monitor *monitor)
 	}
 }
 
-t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *print)
+t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *mutexes)
 {
 	t_philos	*new_philo;
 
@@ -48,7 +48,8 @@ t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *print)
 	new_philo->death_flag = NULL;
 	new_philo->times_fed = 0;
 	new_philo->last_meal = 0;
-	new_philo->print = &(*print);
+	new_philo->print = &mutexes[0];
+    new_philo->death = &mutexes[1];
 	pthread_mutex_init(&new_philo->eating, NULL);
 	pthread_mutex_init(&new_philo->fork, NULL);
 	new_philo->prev = NULL;
@@ -71,7 +72,7 @@ t_philos	*ft_get_philo(t_philos *head, int id)
 //a function that add a philo after the id - 1 position
 //the structure will be of a circular double linked list
 //the stopping point is the amount of philosophers
-int	ft_add_philo(t_philos **head, int id, int *input, pthread_mutex_t *print)
+int	ft_add_philo(t_philos **head, int id, int *input, pthread_mutex_t *mutexes)
 {
 	t_philos	*first_philo;
 	t_philos	*last_philo;
@@ -81,7 +82,7 @@ int	ft_add_philo(t_philos **head, int id, int *input, pthread_mutex_t *print)
 		return (1);
 	first_philo = NULL;
 	last_philo = NULL;
-	new_philo = ft_new_philo(id, input, print);
+	new_philo = ft_new_philo(id, input, mutexes);
 	if (id == 1)
 		*head = new_philo;
 	else
@@ -97,7 +98,7 @@ int	ft_add_philo(t_philos **head, int id, int *input, pthread_mutex_t *print)
 }
 
 //Main function that creates the philosophers chain
-t_philos	*ft_create_philos(int *input, pthread_mutex_t *print)
+t_philos	*ft_create_philos(int *input, pthread_mutex_t *mutexes)
 {
 	t_philos	*head;
 	int			id;
@@ -107,7 +108,7 @@ t_philos	*ft_create_philos(int *input, pthread_mutex_t *print)
 	id = 1;
 	while (id <= input[0])
 	{
-		ft_add_philo(&head, id, input, print);
+		ft_add_philo(&head, id, input, mutexes);
 		id++;
 	}
 	return (head);

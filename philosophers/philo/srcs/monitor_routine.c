@@ -28,9 +28,12 @@ int	ft_check_philo_death(t_monitor *monitor)
 		pthread_mutex_lock(&philo->eating);
 		if (!philo->is_eating && ft_get_time_in_ms() - philo->last_meal > monitor->time_to_die)
 		{
-			pthread_mutex_lock(philo->print);
+			pthread_mutex_lock(philo->death);
 			monitor->death_flag = 1;
+            pthread_mutex_unlock(philo->death);
+            pthread_mutex_lock(philo->print);
 			printf("%ld %d has died\n", ft_get_time_in_ms(), philo->id);
+            pthread_mutex_unlock(philo->print);
 			pthread_mutex_unlock(&philo->eating);
 			return (1);
 		}
@@ -59,13 +62,16 @@ int	ft_check_philo_meals(t_monitor *monitor)
 		pthread_mutex_lock(&philo->eating);
 		if (philo->times_fed < monitor->target_times_to_eat)
 		{
-			pthread_mutex_unlock(&philo->eating);
+            pthread_mutex_unlock(&philo->eating);
 			return (0);
 		}
 		pthread_mutex_unlock(&philo->eating);
 		philo = philo->next;
 		i++;
 	}
+    pthread_mutex_lock(philo->death);
+    *philo->death_flag = 1;
+    pthread_mutex_unlock(philo->death);
 	return (1);
 }
 
@@ -83,14 +89,14 @@ void	*ft_monitor_routine(void *arg)
 	{
 		if (ft_check_philo_death(monitor) == 1)
 		{
-			pthread_mutex_unlock(monitor->philos->print);
-			pthread_mutex_destroy(monitor->philos->print);
+			//pthread_mutex_unlock(monitor->philos->print);
+			//pthread_mutex_destroy(monitor->philos->print);
 			return (NULL);
 		}
 		if (ft_check_philo_meals(monitor) == 1)
 		{
-			pthread_mutex_unlock(monitor->philos->print);
-			pthread_mutex_destroy(monitor->philos->print);
+			//pthread_mutex_unlock(monitor->philos->print);
+			//pthread_mutex_destroy(monitor->philos->print);
 			return (NULL);
 		}
 		usleep(100);

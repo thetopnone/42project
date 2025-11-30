@@ -14,9 +14,16 @@
 
 void	ft_philo_thinking(t_philos *philo)
 {
-	pthread_mutex_lock(philo->print);
-	printf("%ld %d is thinking\n", ft_get_time_in_ms(), philo->id);
-	pthread_mutex_unlock(philo->print);
+    pthread_mutex_lock(philo->death);
+    if (*philo->death_flag == 0)
+    {
+        pthread_mutex_unlock(philo->death);
+	    pthread_mutex_lock(philo->print);
+	    printf("%ld %d is thinking\n", ft_get_time_in_ms(), philo->id);
+	    pthread_mutex_unlock(philo->print);
+    }
+    else
+        pthread_mutex_unlock(philo->death);
 }
 
 void	ft_philo_eating(t_philos *philo)
@@ -37,10 +44,17 @@ void	ft_philo_eating(t_philos *philo)
 
 void	ft_philo_sleeping(t_philos *philo)
 {
-	pthread_mutex_lock(philo->print);
-	printf("%ld %d is sleeping\n", ft_get_time_in_ms(), philo->id);
-	pthread_mutex_unlock(philo->print);
-	ft_usleep(philo->time_to_sleep);
+    pthread_mutex_lock(philo->death);
+    if (*philo->death_flag == 0)
+    {
+        pthread_mutex_unlock(philo->death);
+	    pthread_mutex_lock(philo->print);
+	    printf("%ld %d is sleeping\n", ft_get_time_in_ms(), philo->id);
+	    pthread_mutex_unlock(philo->print);
+	    ft_usleep(philo->time_to_sleep);
+    }
+    else
+        pthread_mutex_unlock(philo->death);
 }
 
 //Remember to make philo 1 grab the fork in front of him first
@@ -77,6 +91,13 @@ void	*ft_philo_routine(void *arg)
 			ft_philo_thinking(philo);
 			ft_philo_eating(philo);
 			ft_philo_sleeping(philo);
+            pthread_mutex_lock(philo->death);
+            if (*philo->death_flag == 1)
+            {
+                pthread_mutex_unlock(philo->death);
+                break ;
+            }
+            pthread_mutex_unlock(philo->death);
 		}
 	}
 	return (NULL);

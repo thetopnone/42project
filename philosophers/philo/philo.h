@@ -29,6 +29,7 @@ typedef	struct s_philos
 	int				*death_flag;
 	long			last_meal;
 	pthread_mutex_t	*print;
+    pthread_mutex_t *death;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	fork;
 	struct s_philos *prev;
