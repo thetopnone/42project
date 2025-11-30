@@ -50,6 +50,7 @@ pthread_t	*ft_init_philos(t_philos *philos, int philo_amount)
 	while(i < philo_amount)
 	{
 		pthread_create(&philo[i], NULL, ft_philo_routine, &(*philos));
+        pthread_detach(philo[i]);
 		philos = philos->next;
 		i++;
 	}

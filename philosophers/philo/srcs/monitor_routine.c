@@ -84,15 +84,15 @@ void	*ft_monitor_routine(void *arg)
 		if (ft_check_philo_death(monitor) == 1)
 		{
 			pthread_mutex_unlock(monitor->philos->print);
-			//pthread_mutex_destroy(monitor->philos->print);
+			pthread_mutex_destroy(monitor->philos->print);
 			return (NULL);
 		}
-		/*if (ft_check_philo_meals(monitor) == 1)
+		if (ft_check_philo_meals(monitor) == 1)
 		{
 			pthread_mutex_unlock(monitor->philos->print);
 			pthread_mutex_destroy(monitor->philos->print);
 			return (NULL);
-		}*/
+		}
 		usleep(100);
 	}
 }

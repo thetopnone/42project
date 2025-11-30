@@ -37,7 +37,8 @@ int	main(int argc, char **argv)
 	ft_set_death_flag(monitor);
 	ft_init_monitor(monitor, &monitor_thread);
 	monitor->philo = ft_init_philos(philos, input[0]);
-	ft_thread_join(monitor ,monitor_thread, input[0]);
+    pthread_join(monitor_thread, NULL);
+	//ft_thread_join(monitor ,monitor_thread, input[0]);
 	free(monitor->philo);
 	free(monitor);
 	ft_exit(&philos, &input);
