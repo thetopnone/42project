@@ -67,14 +67,11 @@ static char	*ft_write_word(char **s, char c)
 	return (word);
 }
 
-//(Check)
 int	ft_split_logic(char **str_arr, char *s, char c)
 {
 	size_t		index;
-	int			quote;
 
 	index = 0;
-	quote = 0;
 	while (*s)
 	{
 		while (*s == c)

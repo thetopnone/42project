@@ -46,7 +46,7 @@ int	ft_infile(char *filepath, t_error *err)
 	int	fd;
 
 	fd = -1;
-	if (!access(filepath, F_OK) && ft_check_file_access(filepath, err) == 1)
+	if (access(filepath, F_OK) || ft_check_file_access(filepath, err) == 1)
 		return (err->infile = 1);
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)

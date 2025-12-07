@@ -52,6 +52,7 @@ void	ft_loop_functionality(t_shell **shell)
 	if (!ft_error_check_parser((*shell)->err))
 		ft_executor((*shell)->pipeline, *shell, (*shell)->err);
 	ft_del_pipeline(&(*shell)->pipeline, (*shell)->err);
+	ft_bzero((*shell)->err, sizeof(t_error));
 	free((*shell)->input);
 	ft_refresh_rl();
 }

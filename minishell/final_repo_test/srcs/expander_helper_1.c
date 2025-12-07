@@ -17,12 +17,10 @@
 static size_t	ft_varlen(char *start, int *in_braces, t_error *err)
 {
 	char	*end;
-	size_t	result;
 
 	end = start;
 	while (*end && ft_isenvchar(*end) == 1)
 		end++;
-	result = 0;
 	if (*end == '}')
 		return ((size_t)(end - start));
 	if ((!*end && *in_braces == 1) || end == start

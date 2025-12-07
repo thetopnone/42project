@@ -43,7 +43,8 @@ int	ft_run_first_built_in(t_pipe **pipe, t_shell *shell)
 	b_type = ft_built_in_check((*pipe)->command->argv[0], shell->err);
 	if ((*pipe)->command->red_chain != NULL)
 		ft_redirector((*pipe)->command->red_chain, shell, shell->err);
-	ft_exec_built_in(b_type, shell, (*pipe)->command->argv, *pipe);
+	if (!ft_error_check_redirections(shell->err))
+		ft_exec_built_in(b_type, shell, (*pipe)->command->argv, *pipe);
 	dup2(saved_fdin, STDIN_FILENO);
 	dup2(saved_fdout, STDOUT_FILENO);
 	close(saved_fdin);
@@ -109,7 +110,8 @@ int	ft_run_in_child(t_pipe *pipe, t_shell *shell, int pipefd[],
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 	}
-	ft_exec_cmd(pipe, shell, shell->err, pipefd[0]);
+	if (!ft_error_check_redirections(shell->err))
+		ft_exec_cmd(pipe, shell, shell->err, pipefd[0]);
 	exit(0);
 	return (0);
 }
