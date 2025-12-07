@@ -115,10 +115,10 @@ int	ft_rip(char *str)
 	rm_left = 0;
 	rm_right = 0;
 	balance = ft_balance(str, &rm_right);
-	printf("BALANCE: %d\n", balance);
+	//printf("BALANCE: %d\n", balance);
 	if (balance > 0)
 		rm_left = balance;
-	printf("LEFT %d\n RIGHT %d\n",rm_left, rm_right);
+	//printf("LEFT %d\n RIGHT %d\n",rm_left, rm_right);
 	ft_recursion(str, rm_left, rm_right, 0);
 	return (0);
 }
@@ -129,7 +129,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	ft_clear_input(argv[1]);
 	//puts(argv[1]);
-	printf("%d\n", ft_valid_balance(argv[1]));
+	//printf("%d\n", ft_valid_balance(argv[1]));
 	if (ft_valid_balance(argv[1]) == 0)
 	{
 		puts(argv[1]);
