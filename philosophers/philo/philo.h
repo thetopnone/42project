@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef	struct s_philos
+typedef struct s_philos
 {
 	int				id;
 	int				is_eating;
@@ -29,11 +29,11 @@ typedef	struct s_philos
 	int				*death_flag;
 	long			last_meal;
 	pthread_mutex_t	*print;
-    pthread_mutex_t *death;
+	pthread_mutex_t	*death;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	fork;
-	struct s_philos *prev;
-	struct s_philos *next;
+	struct s_philos	*prev;
+	struct s_philos	*next;
 }	t_philos;
 
 typedef struct s_monitor
@@ -96,4 +96,10 @@ int			ft_add_philo(t_philos **head, int id, int *input,
 				pthread_mutex_t *print);
 t_philos	*ft_create_philos(int *input, pthread_mutex_t *print);
 int			ft_print_philo_chain(t_philos *head, int philo_amount);
+//-----------------------------------------------------------------------------
+// ROUTINE UTILS (3)
+//-----------------------------------------------------------------------------
+void		ft_safe_print(t_philos *philo, char *str);
+void		ft_monitor_update_death_flag(t_monitor *monitor, t_philos *philo);
+void		ft_fork_unlock_on_death(t_philos *philo);
 #endif

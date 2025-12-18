@@ -5,7 +5,7 @@ SRCS_DIR = srcs
 OBJS_DIR = objs
 SRCS = srcs/main.c  srcs/input_helper.c srcs/philo_list_helper.c srcs/thread_init.c \
 srcs/philo_routine.c srcs/philo_routine_helper.c srcs/monitor_routine.c \
-srcs/cleaner.c
+srcs/cleaner.c srcs/routine_utils.c
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS)) 
 
 all: $(NAME)

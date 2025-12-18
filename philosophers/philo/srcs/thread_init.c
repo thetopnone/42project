@@ -41,13 +41,13 @@ int	ft_init_monitor(t_monitor *monitor, pthread_t *monitor_thread)
 pthread_t	*ft_init_philos(t_philos *philos, int philo_amount)
 {
 	pthread_t	*philo;
-	int		i;
+	int			i;
 
 	i = 0;
 	philo = malloc(philo_amount * sizeof(pthread_t));
 	if (!philo)
 		return (NULL);
-	while(i < philo_amount)
+	while (i < philo_amount)
 	{
 		pthread_create(&philo[i], NULL, ft_philo_routine, &(*philos));
 		philos = philos->next;

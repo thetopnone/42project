@@ -49,7 +49,7 @@ t_philos	*ft_new_philo(int id, int *input, pthread_mutex_t *mutexes)
 	new_philo->times_fed = 0;
 	new_philo->last_meal = 0;
 	new_philo->print = &mutexes[0];
-    new_philo->death = &mutexes[1];
+	new_philo->death = &mutexes[1];
 	pthread_mutex_init(&new_philo->eating, NULL);
 	pthread_mutex_init(&new_philo->fork, NULL);
 	new_philo->prev = NULL;
@@ -92,7 +92,7 @@ int	ft_add_philo(t_philos **head, int id, int *input, pthread_mutex_t *mutexes)
 		last_philo->next = new_philo;
 		first_philo->prev = new_philo;
 		new_philo->prev = last_philo;
-		new_philo->next	= first_philo;
+		new_philo->next = first_philo;
 	}
 	return (0);
 }
@@ -115,10 +115,11 @@ t_philos	*ft_create_philos(int *input, pthread_mutex_t *mutexes)
 }
 
 //debugging function to print the philo chain
+/*
 int	ft_print_philo_chain(t_philos *head, int philo_amount)
 {
-	int	id;
-	t_philos *philo;
+	int			id;
+	t_philos	*philo;
 
 	id = 1;
 	philo = NULL;
@@ -127,17 +128,16 @@ int	ft_print_philo_chain(t_philos *head, int philo_amount)
 		philo = ft_get_philo(head, id);
 		printf("PHILO NUMBER %d------\n", id);
 		printf("ADDRESS: %p\n", philo);
-		printf("ID: %d\n",philo->id);
+		printf("ID: %d\n", philo->id);
 		printf("IS EATING: %d\n", philo->is_eating);
 		printf("TIME TO EAT: %d\n", philo->time_to_eat);
 		printf("TIME TO SLEEP: %d\n", philo->time_to_sleep);
 		printf("TIMES FED: %u\n", philo->times_fed);
 		printf("LAST MEAL: %ld\n", philo->last_meal);
-		//printf("FORK: %d\n", philo->fork);
 		printf("PREV PHILO: %p\n", philo->prev);
 		printf("NEXT PHILO: %p\n", philo->next);
 		printf("---------------------\n");
 		id++;
 	}
 	return (0);
-}
+}*/
