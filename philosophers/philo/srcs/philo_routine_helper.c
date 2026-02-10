@@ -70,11 +70,11 @@ void	ft_eat_and_leave_forks(t_philos *philo)
 	{
 		pthread_mutex_unlock(philo->death);
 		pthread_mutex_lock(&philo->eating);
-		ft_safe_print(philo, "is eating");
 		philo->is_eating = 1;
 		philo->last_meal = ft_get_time_in_ms();
 		philo->times_fed++;
 		pthread_mutex_unlock(&philo->eating);
+		ft_safe_print(philo, "is eating");
 		ft_usleep(philo->time_to_eat);
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->prev->fork);

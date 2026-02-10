@@ -26,7 +26,7 @@ void	ft_philo_thinking(t_philos *philo)
 
 void	ft_philo_eating(t_philos *philo)
 {
-	if (philo->id == 1)
+	if (philo->id % 2 == 1)
 	{
 		ft_grab_front_fork(philo);
 		ft_grab_left_fork(philo);

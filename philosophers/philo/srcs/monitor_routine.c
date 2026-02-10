@@ -79,7 +79,7 @@ void	*ft_monitor_routine(void *arg)
 	t_monitor		*monitor;
 
 	monitor = (t_monitor *)arg;
-	ft_usleep(20);
+	ft_usleep(50);
 	while (1)
 	{
 		if (ft_check_philo_death(monitor) == 1)
