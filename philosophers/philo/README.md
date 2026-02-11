@@ -16,9 +16,9 @@ Also, to handle data races, extra mutexes have been added for every resource tha
 
 ## Instructions
 
-To compile the program, run the command **_make_** inside the project folder and then run the program by executing a command in this format:
+To compile the program, run the command **_make_** inside the **philo/** folder and then run the program by executing a command in this format:
 
-**./philo Number_of_Philosophers Time_to_Die Time_to_eat Time_to_sleep Amount_of_times_each_Philosopher_should_eat**
+**./philo  Number_of_Philosophers  Time_to_Die Time_to_eat  Time_to_sleep   Amount_of_times_each_Philosopher_should_eat**
 
 *The amount of times each philosopher should eat is an optional parameter and the program will also run without it*
 
@@ -26,9 +26,12 @@ To compile the program, run the command **_make_** inside the project folder and
 
 ## Resources
 
-[About the Dining Philosophers problem :](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
+[About the Dining Philosophers problem ](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
+
 [About Multithreadding in C](https://www.geeksforgeeks.org/c/multithreading-in-c/)
+
 [About Mutexes](https://www.geeksforgeeks.org/linux-unix/mutex-lock-for-linux-thread-synchronization/)
+
 [About Data Races](https://www.geeksforgeeks.org/cpp/data-races-in-cpp/)
 
 *AI was recruited to assist with deciphering the valgrind and helgrind terminal outputs for debugging*
