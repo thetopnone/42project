@@ -35,4 +35,5 @@ To compile the program, run the command **_make_** inside the **philo/** folder 
 [About Data Races](https://www.geeksforgeeks.org/cpp/data-races-in-cpp/)
 
 *AI was recruited to assist with deciphering the valgrind and helgrind terminal outputs for debugging*
+
 *AI assisted with understanding why certain data races were taking place*
