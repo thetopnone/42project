@@ -49,7 +49,7 @@ int	ft_check_input(int argc, char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		if (ft_isnumstr(argv[i]) || ft_atoi_mini(argv[i]) == -1)
+		if (ft_isnumstr(argv[i]) || ft_atoi_mini(argv[i]) <= 0)
 			return (1);
 		i++;
 	}
