@@ -69,6 +69,7 @@ void	ft_philo_sleeping(t_philos *philo)
 
 static void	ft_single_philo(t_philos *philo)
 {
+	ft_philo_thinking(philo);
 	ft_grab_front_fork(philo);
 	pthread_mutex_unlock(&philo->fork);
 	ft_usleep(philo->time_to_die + 1);
